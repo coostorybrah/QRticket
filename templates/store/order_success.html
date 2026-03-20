@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="section-content padding-y bg">
+<div class="container">
+    <div class="card">
+        <div class="card-body text-center">
+            <h3>Đơn hàng đã được đặt thành công</h3>
+            <p>Cảm ơn bạn đã đặt vé. Chúng tôi sẽ gửi thông tin đơn hàng qua email.</p>
+            <a href="{% url 'store' %}" class="btn btn-primary">Tiếp tục mua sắm</a>
+        </div>
+    </div>
+</div>
+</section>
+{% endblock %}

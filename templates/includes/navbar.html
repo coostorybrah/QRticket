@@ -16,7 +16,7 @@
             </div>
             <div class="d-flex align-items-center gap-2">
                 <a href="{% url 'store' %}" class="btn btn-sm btn-light text-success" style="font-weight:700;">Tạo sự kiện</a>
-                <a href="{% url 'store' %}" class="text-white" style="font-weight:600;">Vé của tôi</a>
+                <a href="{% url 'dashboard' %}" class="text-white" style="font-weight:600;">Vé của tôi</a>
                 <span class="text-white">|</span>
                 {% if user.id %}
                     <a href="{% url 'logout' %}" class="text-white" style="font-weight:700;">Đăng xuất</a>

@@ -54,3 +54,6 @@ def logout(request):
     messages.success(request, 'Bạn đã đăng xuất thành công.')
     return redirect('login')
 
+@login_required(login_url='login')
+def dashboard(request):
+    return render(request,'accounts/dashboard.html')
