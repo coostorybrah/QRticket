@@ -44,7 +44,8 @@ def api_signup(request):
     return JsonResponse({
         "success": True,
         "avatar": user.avatar,
-        "username": user.username
+        "username": user.username,
+        "message": "Đăng kí thành công!"
     })
 
 
