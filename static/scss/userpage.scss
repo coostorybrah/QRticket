@@ -1,0 +1,15 @@
+// USE
+@use 'components/_variables' as v;
+@use 'components/_base' as *;
+
+// COLOR VARIABLES
+
+// SIZE VARIABLES
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    flex-grow: 1;
+}

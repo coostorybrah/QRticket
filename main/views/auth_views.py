@@ -7,7 +7,7 @@ import json
 
 User = get_user_model()
 
-DEFAULT_AVATAR = "/static/images/avatars/default-avatar.png"
+DEFAULT_AVATAR = "avatars/default-avatar.png"
 
 
 # ĐĂNG KÝ
@@ -43,7 +43,7 @@ def api_signup(request):
 
     return JsonResponse({
         "success": True,
-        "avatar": user.avatar,
+        "avatar": user.avatar.url if user.avatar else None,
         "username": user.username,
         "message": "Đăng kí thành công!"
     })
@@ -67,7 +67,7 @@ def api_login(request):
 
         return JsonResponse({
             "success": True,
-            "avatar": user.avatar,
+            "avatar": user.avatar.url if user.avatar else None,
             "username": user.username
         })
 
@@ -81,7 +81,7 @@ def api_me(request):
 
     return JsonResponse({
         "loggedIn": True,
-        "avatar": request.user.avatar,
+        "avatar": request.user.avatar.url if request.user.avatar else None,
         "username": request.user.username
     })
 

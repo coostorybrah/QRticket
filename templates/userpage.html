@@ -10,15 +10,22 @@
     <title>QRticket - My Profile</title>
 {% endblock %}
 
+<!-- MAIN -->
 {% block main %}
     <article id="info">
         <h1>Thông tin tài khoản</h1>
         <hr>
-        <form id="userInfo">
-            <div class="avatar-wrapper">
-                <img id="avatar">
-            </div>
+        <div class="avatar-wrapper">
+            <img id="avatar"
+                src="{% if user.avatar %}{{ user.avatar.url }}{% else %}{% static 'images/avatars/default-avatar.png' %}{% endif %}">
 
+            <form id="avatarForm" enctype="multipart/form-data" method="POST">
+                <input type="file" name="avatar" accept="image/*">
+                <button type="submit">Đổi ảnh</button>
+            </form>
+        </div>
+
+        <form id="userInfo">
             <div class="user-wrapper">
                 <p>Username:</p>
                 <input type="text" name="username" placeholder="Nhập thông tin vào đây">
@@ -47,3 +54,12 @@
         </div>
     </article>
 {% endblock %}
+
+<!-- SCRIPTS -->
+{% block scripts %}
+<script type="module">
+    import { initAvatarUpload } from "{% static 'js/userpage.js' %}";
+    initAvatarUpload();
+</script>
+{% endblock %}
+

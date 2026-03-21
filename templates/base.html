@@ -45,7 +45,8 @@
                 </a>
                 <div id="userMenu" class="dropdown-hover">
                     <a id="userWrapper" href="{% url 'user_page' %}">
-                        <img id="avatar" src="{{ user.avatar | default:'/static/images/avatars/default-avatar.png' }}">
+                        <img id="avatar"
+                             src="{% if user.avatar %}{{ user.avatar.url }}{% else %}{% static 'images/avatars/default-avatar.png' %}{% endif %}">
                         <span id="avatarText">Tài khoản</span>
                     </a>
 
