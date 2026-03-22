@@ -5,6 +5,10 @@
 <link rel="stylesheet" href="{% static 'css/search.css' %}">
 {% endblock %}
 
+{% block title %}
+    <title>QRticket - Tìm kiếm</title>
+{% endblock %}
+
 {% block main %}
 <div class="cards-container">
 
@@ -26,7 +30,7 @@
 
                 <form method="GET" action="{% url 'search' %}" autocomplete="off">
 
-                    <!-- Keep header search -->
+                    <!-- Keep header search result -->
                     <input type="hidden" name="query" value="{{ query }}">
 
                     <!-- Location -->
@@ -124,13 +128,9 @@
                         <button type="submit" class="filter-button">
                             Lọc
                         </button>
-
                     </div>
-
                 </form>
-
             </div>
-
         </div>
     </h1>
 
@@ -140,20 +140,15 @@
 </div>
 {% endblock %}
 
-
 {% block scripts %}
+    <script type="module">
+        import { renderSearchResults, initPriceSlider } from "{% static 'js/search.js' %}";
 
-<script type="module">
+        const results = {{ search_results|safe }};
 
-import { renderSearchResults, initPriceSlider } from "{% static 'js/search.js' %}";
+        renderSearchResults(results);
+        initPriceSlider();
+    </script>
 
-const results = {{ search_results|safe }};
-
-renderSearchResults(results);
-initPriceSlider();
-
-</script>
-
-<script type="module" src="{% static 'js/modules/dropdownclick.js' %}"></script>
-
+    <script type="module" src="{% static 'js/modules/dropdownclick.js' %}"></script>
 {% endblock %}

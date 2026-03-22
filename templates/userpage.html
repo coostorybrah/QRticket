@@ -1,65 +1,84 @@
 {% extends 'base.html' %}
 {% load static %}
 
-
 {% block style %}
-    <link rel="stylesheet" href="{% static 'css/userpage.css' %}">
+<link rel="stylesheet" href="{% static 'css/userpage.css' %}">
 {% endblock %}
 
-{% block title %} 
-    <title>QRticket - My Profile</title>
+{% block title %}
+<title>QRticket - Thông tin cá nhân</title>
 {% endblock %}
 
-<!-- MAIN -->
 {% block main %}
-    <article id="info">
+<article id="info">
+    <div class="heading-wrapper">
         <h1>Thông tin tài khoản</h1>
         <hr>
+    </div>
+
+    <div class="profile-wrapper">
+
+        <!-- AVATAR -->
         <div class="avatar-wrapper">
             <img id="avatar"
                 src="{% if user.avatar %}{{ user.avatar.url }}{% else %}{% static 'images/avatars/default-avatar.png' %}{% endif %}">
-
-            <form id="avatarForm" enctype="multipart/form-data" method="POST">
-                <input type="file" name="avatar" accept="image/*">
-                <button type="submit">Đổi ảnh</button>
-            </form>
         </div>
-
-        <form id="userInfo">
-            <div class="user-wrapper">
-                <p>Username:</p>
-                <input type="text" name="username" placeholder="Nhập thông tin vào đây">
-            </div>
-
-            <div class="email-wrapper">
-                <p>Email:</p>
-                <input type="email" name="username" pattern=".+@gmail\.com" placeholder="Nhập thông tin vào đây" disabled>
-            </div>
-            <button type="submit">Cập nhật thông tin</button>
+        
+        <form id="avatarForm" enctype="multipart/form-data">
+            <input id="avatarInput" type="file" name="avatar" accept="image/*" hidden>
         </form>
-    </article>
+        
+        <!-- USERNAME + EMAIL -->
+        <form id="userInfoForm" class="info-wrapper">
+            <div>
+                <p>Username:</p>
+                <input type="text" name="username" value="{{ user.username }}" class="info-input" placeholder="Nhập username vào đây">
+            </div>
+            
+            <div>
+                <p>Email:</p>
+                <input type="email" name="email" value="{{ user.email }}" disabled class="info-input">
+            </div>
+            
+            <button type="submit" class="info-submit">Cập nhật thông tin</button>
+        </form>
+    </div>
+</article>
 
-    <article id="changePassword">
+<!-- PASSWORD -->
+<article>
+    <div class="heading-wrapper">
         <h1>Thay đổi mật khẩu</h1>
         <hr>
-        <div class="passwords-wrapper">
+    </div>
+
+    <div class="password-wrapper">
+        <form id="passwordForm" class="info-wrapper">
             <p>Mật khẩu cũ</p>
-            <input type="password" name="password" placeholder="Nhập mật khẩu hiện tại">
+            <input type="password" name="current_password" placeholder="Nhập mật khẩu hiện tại" class="info-input" required>
 
             <p>Mật khẩu mới</p>
-            <input type="password" name="newPassword" placeholder="Nhập mật khẩu mới">
+            <input type="password" name="new_password" placeholder="Nhập mật khẩu mới" class="info-input" required>
 
             <p>Xác nhận mật khẩu mới</p>
-            <input type="password" name="newPassword_confirm" placeholder="Xác nhận mật khẩu mới">
-        </div>
-    </article>
+            <input type="password" name="confirm_password" placeholder="Nhập lại mật khẩu mới" class="info-input" required>
+
+            <button type="submit" class="info-submit">Đổi mật khẩu</button>
+        </form>
+    </div>
+</article>
 {% endblock %}
 
-<!-- SCRIPTS -->
 {% block scripts %}
 <script type="module">
-    import { initAvatarUpload } from "{% static 'js/userpage.js' %}";
+    import { 
+        initAvatarUpload, 
+        initUsernameUpdate, 
+        initPasswordChange 
+    } from "{% static 'js/userpage.js' %}";
+
     initAvatarUpload();
+    initUsernameUpdate();
+    initPasswordChange();
 </script>
 {% endblock %}
-

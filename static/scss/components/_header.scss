@@ -4,6 +4,7 @@
 // COLOR VARIABLES
 
 // SIZE VARIABLES
+$header_min_width: 360px;
 
 // HEADER
 header{
@@ -14,6 +15,7 @@ header{
     margin-left: 0;
     margin-right: 0;
     width: 100%;
+    min-width: $header_min_width;
 
     display: flex;
     flex-direction: row;
@@ -164,7 +166,7 @@ header{
 
 }
 
-@media (max-width: 868px ) and (min-width: 419.5px) {
+@media (max-width: 868px ) and (min-width: 460.5px) {
 
     header {
         flex-direction: row;
@@ -177,21 +179,20 @@ header{
     }
 
     header .search_bar {
-        margin: 0;
         max-width: 60%;
     }
 
 }
 
-@media (max-width: 419.4px) {
+@media (max-width: 460.5px) {
     header {
         flex-direction: column;
         justify-content: center;
 
         .logo {
             img {
-            width: 200px;
-            height: 45px;
+                width: 200px;
+                height: 45px;
             }
         }
 
