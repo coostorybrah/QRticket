@@ -15,12 +15,12 @@ Sự kiện  : {{ item.product.product_name }}
 {% if item.product.event_date %}Ngày     : {{ item.product.event_date }}{% if item.product.event_time %} - {{ item.product.event_time }}{% endif %}
 {% endif %}{% if item.product.venue %}Địa điểm : {{ item.product.venue }}
 {% endif %}Số lượng : {{ item.quantity }}
-Đơn giá  : ${{ item.price }}
-Thành tiền: ${{ item.sub_total }}
+Đơn giá  : {{ item.price }} VND
+Thành tiền: {{ item.sub_total }} VND
 ---------------------------------------------
 {% endfor %}
-Tổng cộng   : ${{ order.order_total }}
-Thuế (2%)   : ${{ order.tax }}
+Tổng cộng   : {{ order.order_total }} VND
+Thuế (2%)   : {{ order.tax }} VND
 
 Cảm ơn bạn đã đặt vé tại QRtickets!
 Nếu có thắc mắc, vui lòng liên hệ với chúng tôi.

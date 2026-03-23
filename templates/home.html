@@ -26,7 +26,23 @@ body { background: #080808; color: #fff; }
         {% if sections %}
             {% for section in sections %}
                 <div class="d-flex justify-content-between align-items-end mb-3 mt-4">
-                    <h2 class="section-title">{{ section.category.category_name|upper }}</h2>
+                    <h2 class="section-title">
+                        {% if section.category.category_name|lower == 'thao' %}
+                            THỂ THAO
+                        {% elif section.category.category_name|lower == 'tham quan trai nghiem' %}
+                            THAM QUAN TRẢI NGHIỆM
+                        {% elif section.category.category_name|lower == 'san khau nghe thuat' %}
+                            SÂN KHẤU NGHỆ THUẬT
+                        {% elif section.category.category_name|lower == 'nhac song' %}
+                            NHẠC SỐNG
+                        {% elif section.category.category_name|lower == 'hoi thao' %}
+                            HỘI THẢO
+                        {% elif section.category.category_name|lower == 'khac' %}
+                            KHÁC
+                        {% else %}
+                            {{ section.category.category_name|upper }}
+                        {% endif %}
+                    </h2>
                     <a href="{% url 'products_by_category' section.category.slug %}" class="text-success">Xem tất cả</a>
                 </div>
                 <div class="row">
