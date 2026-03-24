@@ -5,10 +5,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- FAVICON -->
+    <link rel="apple-touch-icon" sizes="57x57" href="{% static 'favicon/favicon.ico' %}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{% static 'favicon/apple-icon-60x60.png' %}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{% static 'favicon/apple-icon-72x72.png' %}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'favicon/apple-icon-76x76.png' %}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{% static 'favicon/apple-icon-114x114.png' %}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{% static 'favicon/apple-icon-120x120.png' %}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{% static 'favicon/apple-icon-144x144.png' %}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{% static 'favicon/apple-icon-152x152.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-icon-180x180.png' %}">
+
+    <link rel="icon" type="image/png" sizes="192x192" href="{% static 'favicon/android-icon-192x192.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'favicon/favicon-96x96.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+
+    <link rel="manifest" href="{% static 'favicon/manifest.json' %}">
+
+    <meta name="msapplication-TileImage" content="{% static 'favicon/ms-icon-144x144.png' %}">
+
+    <!-- STYLES -->
     {% block style %}
         <link rel="stylesheet" href="{% static 'css/trangchu.css' %}">
     {% endblock %}
 
+    <!-- TITLE -->
     {% block title %} 
         <title>QRticket</title>
     {% endblock %}
@@ -16,139 +38,150 @@
 
 <body>
 
-<header>
+    <header>
+        <div class="logo">
+            <a href="{% url 'home' %}" title="QRticket">
+                <img src="{% static 'images/icons/logo.png' %}" alt="QRticket">
+            </a>
+        </div>
 
-    <div class="logo">
-        <a href="{% url 'home' %}" title="QRticket">
-            <img src="{% static 'images/icons/logo.png' %}" alt="QRticket">
-        </a>
-    </div>
-
-    <div class="search_bar wrapper">
-        <form action="{% url 'search' %}" class="wrapper" method="GET">
-            <input type="text" name="query" placeholder="Tìm kiếm...">
-            <button type="submit">
-                <img src="{% static 'images/icons/search_icon.png' %}" alt="Search icon">
-            </button>
-        </form>
-    </div>
-        
-    <div class="others">
-        <div class="auth">
-            {% if user.is_authenticated %}
-                <a class="eventManager wrapper" href="{% url 'my_events' %}">
-                    Tạo sự kiện
-                </a>
-        
-                <a class="ticketManager wrapper" href="{% url 'my_tickets' %}">
-                    Vé của tôi
-                </a>
-                <div id="userMenu" class="dropdown-hover">
-                    <a id="userWrapper" href="{% url 'user_page' %}">
-                        <img id="avatar" src="{{ user.avatar | default:'/static/images/avatars/default-avatar.png' }}">
-                        <span id="avatarText">Tài khoản</span>
+        <div class="search_bar wrapper">
+            <form action="{% url 'search' %}" class="wrapper" method="GET">
+                <input type="text" name="query" placeholder="Tìm kiếm...">
+                <button type="submit">
+                    <img src="{% static 'images/icons/search_icon.png' %}" alt="Search icon">
+                </button>
+            </form>
+        </div>
+            
+        <div class="others">
+            <div class="auth">
+                {% if user.is_authenticated %}
+                    <a class="eventManager wrapper" href="{% url 'my_events' %}">
+                        Tạo sự kiện
                     </a>
+            
+                    <a class="ticketManager wrapper" href="{% url 'my_tickets' %}">
+                        Vé của tôi
+                    </a>
+                    <div id="userMenu" class="dropdown-hover">
+                        <a id="userWrapper" href="{% url 'user_page' %}">
+                            <img id="avatarHeader"
+                                src="{% if user.avatar %}{{ user.avatar.url }}{% else %}{% static 'images/avatars/default-avatar.png' %}{% endif %}">
+                            <span id="avatarText">Tài khoản</span>
+                        </a>
 
-                    <div class="dropdown">
-                        <a href="{% url 'my_tickets' %}">Vé của tôi</a>
-                        <a href="{% url 'user_page' %}">Tài khoản của tôi</a>
-                        <a id="logoutBtn">Đăng xuất</a>
+                        <div class="dropdown">
+                            <a href="{% url 'my_tickets' %}">Vé của tôi</a>
+                            <a href="{% url 'user_page' %}">Tài khoản của tôi</a>
+                            <a id="logoutBtn">Đăng xuất</a>
+                        </div>
                     </div>
-                </div>
 
-            {% else %}
-                <div id="guestUI" class="wrapper modalTrigger">
-                    <button type="button" class="modalTrigger--login" data-open="mdl-login">
-                        Đăng nhập / Đăng ký
+                {% else %}
+                    <div id="guestUI" class="wrapper modal-trigger">
+                        <button type="button" class="modal-trigger" data-open="mdl-login">
+                            Đăng nhập
+                        </button>
+
+                        <span class="text-separator">|</span>
+
+                        <button type="button" class="modal-trigger" data-open="mdl-signUp">
+                            Đăng ký
+                        </button>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <main>
+        {% block main %}{% endblock %}
+    </main>
+
+    <footer>
+        {% block footer %}{% endblock %}
+    </footer>
+
+    <!-- LOGIN MODAL -->
+    <div id="mdl-login" class="modal">
+        <div class="modal-content login">
+            <div class="login__header">
+                <button class="close" data-close="mdl-login">&times;</button>
+                <h1>ĐĂNG NHẬP</h1>
+            </div>
+
+            <div class="login__body">
+                <form class="login" id="login-form">
+                    {% csrf_token %}
+                    <input name="username" type="text" placeholder="Username hoặc email" required>
+                    <input name="password" type="password" placeholder="Mật khẩu" required>
+                    <button type="submit" class="login__button">
+                        Đăng nhập
+                    </button>
+                </form>
+
+                <div class="modal-switch">
+                    <div>Chưa có tài khoản?</div>
+                    <button type="button" class="modal-trigger in-modal" data-open="mdl-signUp">
+                        Đăng ký ngay
                     </button>
                 </div>
-            {% endif %}
+
+            </div>
         </div>
     </div>
-</header>
 
-<main>
-    {% block main %}{% endblock %}
-</main>
+    <!-- SIGN-UP MODAL -->
+    <div id="mdl-signUp" class="modal">
+        <div class="modal-content login">
+            <div class="login__header">
+                <button class="close" data-close="mdl-signUp">&times;</button>
+                <h1>ĐĂNG KÝ</h1>
+            </div>
 
-<footer>
-    {% block footer %}{% endblock %}
-</footer>
+            <div class="login__body">
+                <form class="login" id="signUp-form">
+                    {% csrf_token %}
+                    <input name="username" type="text" placeholder="Nhập username" required>
+                    <input name="email" type="text" placeholder="Email" required>
+                    <input name="password" type="password" placeholder="Mật khẩu" required>
+                    <input name="password_confirm" type="password" placeholder="Nhập lại mật khẩu" required>
 
-<!-- LOGIN MODAL -->
-<div id="mdl-login" class="modal">
-    <div class="modal-content login">
-        <div class="login__header">
-            <button class="close" data-close="mdl-login">&times;</button>
-            <h1>ĐĂNG NHẬP</h1>
-        </div>
+                    <button type="submit" class="login__button">
+                        Đăng ký
+                    </button>
+                </form>
 
-        <div class="login__body">
-            <form class="login" id="login-form">
-                {% csrf_token %}
-                <input name="username" type="text" placeholder="Email hoặc số điện thoại" required>
-                <input name="password" type="password" placeholder="Mật khẩu" required>
-                <button type="submit" class="login__button">
-                    Đăng nhập
-                </button>
-            </form>
+                <div class="modal-switch">
+                    <div>Đã có tài khoản?</div>
+                    <button type="button" class="modal-trigger in-modal" data-open="mdl-login">
+                        Đăng nhập ngay
+                    </button>
+                </div>
 
-            <button type="button" class="modalTrigger--signUp" data-open="mdl-signUp">
-                Chưa có tài khoản?
-            </button>
-
+            </div>
         </div>
     </div>
-</div>
-
-<!-- SIGN-UP MODAL -->
-<div id="mdl-signUp" class="modal">
-    <div class="modal-content login">
-        <div class="login__header">
-            <button class="close" data-close="mdl-signUp">&times;</button>
-            <h1>ĐĂNG KÝ</h1>
-        </div>
-
-        <div class="login__body">
-            <form class="login" id="signUp-form">
-                {% csrf_token %}
-                <input name="username" type="text" placeholder="Nhập username" required>
-                <input name="email" type="text" placeholder="Email" required>
-                <input name="password" type="password" placeholder="Mật khẩu" required>
-                <input name="password_confirm" type="password" placeholder="Nhập lại mật khẩu" required>
-
-                <button type="submit" class="login__button">
-                    Đăng ký
-                </button>
-            </form>
-
-            <button type="button" class="modalTrigger--signUp" data-open="mdl-login">
-                Đã có tài khoản?
-            </button>
-
-        </div>
-    </div>
-</div>
 
 
-{% block endOfBody %}{% endblock %}
+    {% block endOfBody %}{% endblock %}
 
-<script type="module"> 
-    import { initLogin, initSignUp } from "{% static 'js/modules/auth.js' %}";
+    <script type="module"> 
+        import { initLogin, initSignUp } from "{% static 'js/modules/auth.js' %}";
 
-    initLogin();
-    initSignUp();
+        initLogin();
+        initSignUp();
 
-    document.getElementById("logoutBtn")?.addEventListener("click", async () => {
-        await fetch("/api/logout");
-        location.reload();
-    });
-</script>
+        document.getElementById("logoutBtn")?.addEventListener("click", async () => {
+            await fetch("/api/logout");
+            location.reload();
+        });
+    </script>
 
-<script type="module" src="{% static 'js/modules/modal.js' %}"></script>
+    <script type="module" src="{% static 'js/modules/modal.js' %}"></script>
 
-{% block scripts %}
-{% endblock %}
-
+    {% block scripts %}
+    {% endblock %}
 </body>
 </html>

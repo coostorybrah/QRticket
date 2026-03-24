@@ -1,3 +1,4 @@
+@charset "UTF-8";
 ::-webkit-scrollbar {
   width: 3px;
   height: 3px;
@@ -450,252 +451,157 @@ header .others__modalTrigger {
 main {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(180deg, #27272A 25%, #121212 50%);
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-grow: 1;
 }
 
-.banner {
-  margin-top: 2%;
-  width: 80%;
-  aspect-ratio: 18/6;
-  max-width: 900px;
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-}
-.banner__info {
-  background: #38383D;
-  color: white;
-  width: 40%;
-  height: 100%;
-  padding: 15px;
-  border-radius: 20px 0 0 20px;
+article {
+  width: 100%;
+  padding: 5px 0;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
+  justify-content: flex-start;
+  align-items: center;
 }
-.banner__info .text {
+article .heading-wrapper {
+  width: 85%;
+  align-self: center;
+}
+article .heading-wrapper h1 {
+  font-size: 1.8rem;
+  padding: 5px 5px 5px 10px;
+  align-self: flex-start;
+}
+article .heading-wrapper hr {
   width: 100%;
-  height: 70%;
-  margin-bottom: 5px;
+  align-self: center;
+  margin: 5px 0 15px 0;
 }
-.banner__info .text h1 {
-  margin-bottom: 10px;
-  font-size: 100%;
-  margin-bottom: 5px;
-}
-.banner__info .text .details {
-  font-size: medium;
-  font-style: italic;
-  font-weight: bold;
-}
-.banner__info .text .details p {
-  margin-top: 5px;
-}
-.banner__info .text .details #thoiGian {
-  color: #4dba83;
-}
-.banner__info .text .details #diaChiTen {
-  color: #4dba83;
-}
-.banner__info .text .details #diaChiCuThe {
-  font-weight: normal;
-  font-size: small;
-}
-.banner__info .price {
-  width: 100%;
-  margin-bottom: 5px;
-  display: flex;
-  flex-direction: column;
-  font-size: large;
-}
-.banner__info .price p {
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-.banner__info .price span {
-  margin-top: 5px;
-  font-weight: bold;
-  color: #4dba83;
-}
-.banner__info .price button {
-  color: white;
-  background: #26bc71;
-  border: transparent;
-  border-radius: 5px;
-  padding: 5px;
-  font-weight: bold;
-  font-size: larger;
+
+.avatar-wrapper {
+  width: 309.6px;
+  height: 309.6px;
+  padding: 0;
+  border: 5px solid white;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
   cursor: pointer;
 }
-.banner__info .price button:hover {
-  color: #121212;
-  background: whitesmoke;
-}
-.banner .date {
-  color: #4dba83;
-}
-.banner .time {
-  font-style: italic;
-  font-weight: normal;
-  color: white;
-}
-.banner__image {
-  width: 60%;
-  border-radius: 0 20px 20px 0;
-  overflow: hidden;
-}
-.banner__image img {
+.avatar-wrapper img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.3s ease;
+}
+.avatar-wrapper:hover img {
+  transform: scale(1.05);
+}
+.avatar-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.15);
+  color: white;
+  font-weight: 500;
+  opacity: 0;
+  transition: 0.25s ease;
+  pointer-events: none;
+}
+.avatar-wrapper:hover::after {
+  opacity: 1;
+}
+.avatar-wrapper.uploading::after {
+  content: "Đang tải...";
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.6);
 }
 
-.event {
-  width: 80%;
-  max-width: 900px;
-  margin: 12px 0 12px 0;
-  padding: 8px 0 8px 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: flex-start;
-  gap: 20px;
-}
-.event .tickets {
-  background: #27272A;
-  width: 50%;
-  padding-bottom: 10px;
-  border-radius: 15px;
-  overflow: hidden;
+.profile-wrapper {
   display: flex;
   flex-direction: column;
-  justify-items: center;
+  justify-content: flex-start;
   align-items: center;
 }
-.event .tickets h1 {
-  background: #26bc71;
-  width: 100%;
-  height: 2rem;
-  margin-bottom: 8px;
+
+.info-wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-size: larger;
-}
-.event .tickets table {
+  justify-content: flex-start;
+  align-items: stretch;
   width: 100%;
-  border: 1px solid white;
-  border-collapse: collapse;
 }
-.event .tickets table th {
-  padding: 5px;
-  border: 1px solid white;
-}
-.event .tickets table tr {
-  padding: 5px 0 5px 0;
-  border: 1px solid white;
-}
-.event .tickets table td {
-  padding: 10px;
-  border: 1px solid white;
-}
-.event .tickets .footnote {
-  font-style: italic;
-  font-size: small;
+.info-wrapper p {
   margin-top: 5px;
+  margin-bottom: 3px;
 }
-.event .description {
-  background: #27272A;
-  width: 50%;
-  padding-bottom: 10px;
-  border-radius: 15px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-items: center;
-  align-items: center;
-}
-.event .description h1 {
-  background: #26bc71;
+.info-wrapper .info-input {
+  background: white;
   width: 100%;
-  height: 2rem;
-  margin-bottom: 8px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-size: larger;
-}
-.event .description #moTa {
-  padding: 8px 10px 8px 10px;
-  min-height: 2rem;
+  padding: 5px;
+  margin-bottom: 7px;
+  font-size: 1rem;
+  outline: none;
+  border: none;
+  border-radius: 3px;
 }
 
-@media (max-width: 881px) {
-  main {
+.password-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  width: 309.6px;
+}
+.password-wrapper p {
+  margin-top: 5px;
+  margin-bottom: 3px;
+}
+.password-wrapper .info-input {
+  background: white;
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 7px;
+  font-size: 1rem;
+  outline: none;
+  border: none;
+  border-radius: 3px;
+}
+
+.info-submit {
+  background: #26bc71;
+  color: white;
+  margin: 5px 0;
+  padding: 5px;
+  align-self: flex-end;
+  outline: none;
+  border: none;
+  border-radius: 3px;
+  font-size: 1rem;
+  font-weight: bold;
+}
+.info-submit:hover {
+  background: whitesmoke;
+  color: #333;
+}
+
+@media (max-width: 815.8px) {
+  article .heading-wrapper {
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    background: linear-gradient(180deg, #27272A 20%, #121212 40%);
   }
-  .banner {
-    margin: 2%;
-    padding: 0;
-    width: 80%;
-    min-width: 365px;
-    aspect-ratio: 1/1;
-    display: flex;
-    flex-direction: column-reverse;
-    justify-content: center;
+  article .heading-wrapper h1 {
+    padding: 5px 5px 0px 10px;
+    align-self: center;
+    font-size: 1.5rem;
   }
-  .banner__info {
-    min-width: 365px;
-    width: 100%;
-    height: auto;
-    padding: 10px;
-    flex-direction: column;
-    justify-content: space-between;
-    border-radius: 0 0 20px 20px;
-  }
-  .banner__info h1 {
-    font-size: 100%;
-  }
-  .banner__info .details {
-    font-size: medium;
-  }
-  .banner__info .price span {
-    font-size: medium;
-    font-weight: bold;
-    color: #4dba83;
-  }
-  .banner__image {
-    width: 100%;
-    min-width: 365px;
-    aspect-ratio: 16/9;
-    margin: 0;
-    border-radius: 20px 20px 0 0;
-    overflow: hidden;
-  }
-  .banner__image img {
-    object-fit: cover;
-  }
-  .event {
-    margin: 10px 0 10px 0;
-    min-width: 365px;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-  }
-  .event .tickets {
-    width: 100%;
-  }
-  .event .description {
-    padding: 10px;
-    width: 100%;
-  }
-}/*# sourceMappingURL=chitietsukien.css.map */
+}/*# sourceMappingURL=userpage.css.map */

@@ -1,78 +1,84 @@
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Q
+
 from django.contrib.auth import authenticate
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login, logout
+
 import json
 
 User = get_user_model()
 
-DEFAULT_AVATAR = "/static/images/avatars/default-avatar.png"
-
-
 # ĐĂNG KÝ
-@csrf_exempt
 def api_signup(request):
     if request.method != "POST":
         return JsonResponse({"error": "POST required"}, status=400)
 
     data = json.loads(request.body)
 
-    username = data.get("username")
+    username = data.get("username", "").strip()
+    email = data.get("email", "").strip().lower()
     password = data.get("password")
-    email = data.get("email")
+    
+    # Check dữ liệu
+    if not username or not email or not password:
+        return JsonResponse({"error": "Missing fields"}, status=400)
 
-    # check tồn tại
+    if len(password) < 6:
+        return JsonResponse({"error": "Password too short"}, status=400)
+
+    # Check tồn tại
     if User.objects.filter(username=username).exists():
         return JsonResponse({"error": "Username already exists"}, status=400)
 
     if User.objects.filter(email=email).exists():
         return JsonResponse({"error": "Email already exists"}, status=400)
 
-    # tạo user
+    # Tạo user
     user = User.objects.create_user(
         username=username,
         password=password,
         email=email,
     )
 
-    user.avatar = DEFAULT_AVATAR
-    user.save()
-
     login(request, user)
 
     return JsonResponse({
         "success": True,
-        "avatar": user.avatar,
+        "avatar": user.avatar.url if user.avatar else None,
         "username": user.username,
+        "email": user.email,
         "message": "Đăng kí thành công!"
     })
 
 
 # ĐĂNG NHẬP
-@csrf_exempt
 def api_login(request):
     if request.method != "POST":
         return JsonResponse({"error": "POST required"}, status=400)
 
     data = json.loads(request.body)
 
-    username = data.get("username")
+    identifier = data.get("username")       # Username hoặc email 
     password = data.get("password")
 
-    user = authenticate(request, username=username, password=password)
+    # Đăng nhập bằng username hoặc email
+    user_obj = User.objects.filter(Q(username=identifier) | Q(email=identifier)).first()
 
-    if user is not None:
-        login(request, user)
+    if user_obj:
+        user = authenticate(request, username=user_obj.username, password=password)
 
-        return JsonResponse({
-            "success": True,
-            "avatar": user.avatar,
-            "username": user.username
-        })
+        if user:
+            login(request, user)
+            return JsonResponse({
+                "success": True,
+                "avatar": user.avatar.url if user.avatar else None,
+                "username": user.username,
+                "email": user.email,
+                "message": "Đăng nhập thành công!"
+            })
 
     return JsonResponse({"error": "Invalid credentials"}, status=401)
-
 
 # KIỂM TRA LOGIN
 def api_me(request):
@@ -81,13 +87,13 @@ def api_me(request):
 
     return JsonResponse({
         "loggedIn": True,
-        "avatar": request.user.avatar,
-        "username": request.user.username
+        "avatar": request.user.avatar.url if request.user.avatar else None,
+        "username": request.user.username,
+        "email": request.user.email
     })
 
 
 # ĐĂNG XUẤT
-@csrf_exempt
 def api_logout(request):
     logout(request)
     return JsonResponse({"success": True})
