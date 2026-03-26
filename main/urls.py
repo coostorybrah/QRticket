@@ -1,4 +1,5 @@
-from django.urls import path
+from django.urls import path, include
+from users.api_auth import login_jwt
 from . import views
 
 urlpatterns = [
@@ -12,14 +13,18 @@ urlpatterns = [
     path('my-events/', views.my_events, name='my_events'),
     path('user/', views.user_page, name='user_page'),
     
-    # API
+    # EVENTS APIs
     path("api/events/", views.api_events, name="api_events"),
     path("api/events/<str:event_id>/", views.api_event_detail, name="api_event_detail"),
     
-    # AUTH PATHS
+    # AUTHENTICATION APIs
     path("api/login/", views.api_login),
+    path("api/token/", login_jwt),
     path("api/signup/", views.api_signup),
     path("api/me/", views.api_me),
     path("api/logout/", views.api_logout),
+    
+    # ORDERS APIs
+    path("api/orders/", include("orders.urls")),
 
 ]

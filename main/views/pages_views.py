@@ -30,6 +30,11 @@ def user_page(request):
 def my_events(request):
     return render(request, "sukiencuatoi.html")
 
+# ORDER PAGE
+@login_required(login_url="/")
+def orders_page(request):
+    return render(request, "orderspage.html")
+
 # SEARCH
 def search(request):
     query = request.GET.get("query", "").lower()

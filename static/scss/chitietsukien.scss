@@ -96,16 +96,22 @@ main {
                 color: v.$active_text_color;
             }
 
-            button {
+            #nuyBtn {
                 color: v.$header_text_color;
                 background: v.$btn_inactive_color;
-                border: transparent;
-                border-radius: 5px;
                 
                 padding: 5px;
+                
+                border: transparent;
+                border-radius: 5px;
+
                 font-weight: bold;
                 font-size: larger;
+                text-decoration: none;
+                text-align: center;
+
                 cursor: pointer;
+                
                 &:hover {
                     color: v.$body_bg_color;
                     background: v.$btn_active_color;

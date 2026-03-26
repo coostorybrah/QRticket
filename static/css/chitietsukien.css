@@ -1,10 +1,10 @@
 ::-webkit-scrollbar {
-  width: 3px;
-  height: 3px;
+  width: 3.5px;
+  height: 3.5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #121212;
+  background: #000000;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -24,10 +24,12 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
   color: whitesmoke;
-  background-color: #121212;
+  background-color: #000000;
   width: 100%;
+  min-width: 363.5px;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
 }
 
 .wrapper {
@@ -45,6 +47,8 @@ header {
   margin-right: 0;
   width: 100%;
   min-width: 360px;
+  min-height: 61.5px;
+  max-height: 147.5px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -81,7 +85,7 @@ header .search_bar {
   justify-content: space-around;
   align-items: center;
   flex-grow: 2;
-  margin-left: 10px;
+  margin: 10px;
   max-width: 40%;
 }
 header .search_bar input {
@@ -142,7 +146,7 @@ header .others .eventManager:visited {
 }
 header .others .eventManager:hover {
   background-color: whitesmoke;
-  color: #121212;
+  color: #000000;
   transition: linear;
   transition-duration: 0.2s;
 }
@@ -158,7 +162,7 @@ header .others__modalTrigger {
   min-width: 96px;
 }
 
-@media (max-width: 868px) and (min-width: 460.5px) {
+@media (max-width: 868px) and (min-width: 461.6px) {
   header {
     flex-direction: row;
     justify-content: center;
@@ -171,10 +175,11 @@ header .others__modalTrigger {
     max-width: 60%;
   }
 }
-@media (max-width: 460.5px) {
+@media (max-width: 461.6px) {
   header {
     flex-direction: column;
     justify-content: center;
+    flex-wrap: wrap;
   }
   header .logo img {
     width: 200px;
@@ -182,6 +187,7 @@ header .others__modalTrigger {
   }
   header .search_bar {
     max-width: 100%;
+    margin: 3px;
   }
 }
 .modal-trigger {
@@ -283,7 +289,7 @@ header .others__modalTrigger {
   width: 80%;
   height: 2em;
   border-radius: 6px;
-  border-width: 1px solid #121212;
+  border-width: 1px solid #000000;
   flex-grow: 1;
   font-size: medium;
 }
@@ -359,6 +365,7 @@ header .others__modalTrigger {
   flex-direction: column;
   justify-content: space-evenly;
   align-items: flex-start;
+  z-index: 999;
 }
 .dropdown-hover .dropdown a {
   width: 100%;
@@ -452,7 +459,7 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(180deg, #27272A 25%, #121212 50%);
+  background: linear-gradient(180deg, #27272A 25%, #000000 50%);
 }
 
 .banner {
@@ -520,18 +527,20 @@ main {
   font-weight: bold;
   color: #4dba83;
 }
-.banner__info .price button {
+.banner__info .price #nuyBtn {
   color: white;
   background: #26bc71;
+  padding: 5px;
   border: transparent;
   border-radius: 5px;
-  padding: 5px;
   font-weight: bold;
   font-size: larger;
+  text-decoration: none;
+  text-align: center;
   cursor: pointer;
 }
-.banner__info .price button:hover {
-  color: #121212;
+.banner__info .price #nuyBtn:hover {
+  color: #000000;
   background: whitesmoke;
 }
 .banner .date {
@@ -641,7 +650,7 @@ main {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    background: linear-gradient(180deg, #27272A 20%, #121212 40%);
+    background: linear-gradient(180deg, #27272A 20%, #000000 40%);
   }
   .banner {
     margin: 2%;

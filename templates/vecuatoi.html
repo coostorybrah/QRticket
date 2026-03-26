@@ -1,11 +1,21 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load static %}
 
+<!-- HEAD -->
 {% block style %}
-    
+    <link rel="stylesheet" href="{% static 'css/orderpage.css' %}">
 {% endblock %}
 
+{% block title %}
+    <title>QRticket - Vé của tôi</title>
+{% endblock %}
 
+<!-- MAIN -->
 {% block main %}
-    <h1>Vé của tôi</h1>
+
+{% endblock %}
+
+<!-- SCRIPTS -->
+{% block scripts %}
+
 {% endblock %}

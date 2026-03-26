@@ -14,9 +14,10 @@ body {
     color: whitesmoke;
     background-color: v.$body_bg_color;
     width: 100%;
-
+    min-width: 363.5px;
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
 }
 
 // BASE WRAPPER

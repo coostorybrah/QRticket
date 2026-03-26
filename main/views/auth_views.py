@@ -4,6 +4,7 @@ from django.db.models import Q
 from django.contrib.auth import authenticate
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login, logout
+from users.jwt_utils import get_user_from_request
 
 import json
 
@@ -82,14 +83,21 @@ def api_login(request):
 
 # KIỂM TRA LOGIN
 def api_me(request):
-    if not request.user.is_authenticated:
+    # 1. Try session auth first
+    if request.user.is_authenticated:
+        user = request.user
+    else:
+        # 2. Fallback to JWT
+        user = get_user_from_request(request)
+
+    if user is None:
         return JsonResponse({"loggedIn": False})
 
     return JsonResponse({
         "loggedIn": True,
-        "avatar": request.user.avatar.url if request.user.avatar else None,
-        "username": request.user.username,
-        "email": request.user.email
+        "avatar": user.avatar.url if user.avatar else None,
+        "username": user.username,
+        "email": user.email
     })
 
 
