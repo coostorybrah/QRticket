@@ -7,6 +7,7 @@ urlpatterns = [
     path("", views.home, name="home"),
     path("search/", views.search, name="search"),
     path("chitietsukien/<str:event_id>/", views.event_detail, name="event_detail"),
+    path("orders/<str:event_id>/", views.orders_page, name="orders_page"),
 
     # USER PATHS
     path('my-tickets/', views.my_tickets, name='my_tickets'),
@@ -22,7 +23,6 @@ urlpatterns = [
     path("api/token/", login_jwt),
     path("api/signup/", views.api_signup),
     path("api/me/", views.api_me),
-    path("api/logout/", views.api_logout),
     
     # ORDERS APIs
     path("api/orders/", include("orders.urls")),

@@ -1,23 +1,30 @@
-// OPEN MODAL
-document.querySelectorAll("[data-open]").forEach(btn => {
+import { isAuthLocked } from "./authGuard.js";
 
-    btn.addEventListener("click", () => {
-        const target = btn.dataset.open;
+export function initModalTriggers() {
+    document.addEventListener("click", (e) => {
+        // OPEN
+        const openBtn = e.target.closest("[data-open]");
+        if (openBtn) {
+            const modalId = openBtn.dataset.open;
 
-        document.querySelectorAll(".modal").forEach(m => {
-            m.classList.remove("active");
-        });
+            document.querySelectorAll(".modal").forEach(m => {
+                m.classList.remove("active");
+            });
 
-        document.getElementById(target).classList.add("active");
+            document.getElementById(modalId)?.classList.add("active");
+        }
+
+        // CLOSE
+        const closeBtn = e.target.closest("[data-close]");
+        if (closeBtn) {
+
+            if (isAuthLocked()) {
+                window.location.replace("/");
+                return;
+            }
+
+            const modalId = closeBtn.dataset.close;
+            document.getElementById(modalId)?.classList.remove("active");
+        }
     });
-});
-
-// CLOSE MODAL
-document.querySelectorAll("[data-close]").forEach(btn => {
-    
-    btn.addEventListener("click", () => {
-        const target = btn.dataset.close;
-
-        document.getElementById(target).classList.remove("active");
-    });
-});
+}

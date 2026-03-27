@@ -1,107 +1,96 @@
-from django.http import JsonResponse
 from django.db.models import Q
+from django.contrib.auth import authenticate, get_user_model
 
-from django.contrib.auth import authenticate
-from django.contrib.auth import get_user_model
-from django.contrib.auth import login, logout
-from users.jwt_utils import get_user_from_request
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.response import Response
+
+from rest_framework_simplejwt.tokens import RefreshToken
 
 import json
 
 User = get_user_model()
 
 # ĐĂNG KÝ
+@api_view(["POST"])
+@permission_classes([AllowAny])
 def api_signup(request):
-    if request.method != "POST":
-        return JsonResponse({"error": "POST required"}, status=400)
-
-    data = json.loads(request.body)
+    data = request.data
 
     username = data.get("username", "").strip()
     email = data.get("email", "").strip().lower()
     password = data.get("password")
-    
-    # Check dữ liệu
+
     if not username or not email or not password:
-        return JsonResponse({"error": "Missing fields"}, status=400)
+        return Response({"error": "Missing fields"}, status=400)
 
     if len(password) < 6:
-        return JsonResponse({"error": "Password too short"}, status=400)
+        return Response({"error": "Password too short"}, status=400)
 
-    # Check tồn tại
     if User.objects.filter(username=username).exists():
-        return JsonResponse({"error": "Username already exists"}, status=400)
+        return Response({"error": "Username already exists"}, status=400)
 
     if User.objects.filter(email=email).exists():
-        return JsonResponse({"error": "Email already exists"}, status=400)
+        return Response({"error": "Email already exists"}, status=400)
 
-    # Tạo user
     user = User.objects.create_user(
         username=username,
         password=password,
         email=email,
     )
 
-    login(request, user)
-
-    return JsonResponse({
+    return Response({
         "success": True,
-        "avatar": user.avatar.url if user.avatar else None,
-        "username": user.username,
-        "email": user.email,
         "message": "Đăng kí thành công!"
     })
 
 
 # ĐĂNG NHẬP
+@api_view(["POST"])
+@permission_classes([AllowAny])
 def api_login(request):
-    if request.method != "POST":
-        return JsonResponse({"error": "POST required"}, status=400)
+    data = request.data
 
-    data = json.loads(request.body)
-
-    identifier = data.get("username")       # Username hoặc email 
+    identifier = data.get("username")
     password = data.get("password")
 
-    # Đăng nhập bằng username hoặc email
-    user_obj = User.objects.filter(Q(username=identifier) | Q(email=identifier)).first()
+    user_obj = User.objects.filter(
+        Q(username=identifier) | Q(email=identifier)
+    ).first()
 
-    if user_obj:
-        user = authenticate(request, username=user_obj.username, password=password)
+    if not user_obj:
+        return Response({"error": "Invalid credentials"}, status=401)
 
-        if user:
-            login(request, user)
-            return JsonResponse({
-                "success": True,
-                "avatar": user.avatar.url if user.avatar else None,
-                "username": user.username,
-                "email": user.email,
-                "message": "Đăng nhập thành công!"
-            })
+    user = authenticate(username=user_obj.username, password=password)
 
-    return JsonResponse({"error": "Invalid credentials"}, status=401)
+    if not user:
+        return Response({"error": "Invalid credentials"}, status=401)
 
-# KIỂM TRA LOGIN
-def api_me(request):
-    # 1. Try session auth first
-    if request.user.is_authenticated:
-        user = request.user
-    else:
-        # 2. Fallback to JWT
-        user = get_user_from_request(request)
+    # ✅ Generate JWT
+    refresh = RefreshToken.for_user(user)
 
-    if user is None:
-        return JsonResponse({"loggedIn": False})
+    return Response({
+        "success": True,
+        "access": str(refresh.access_token),
+        "refresh": str(refresh),
 
-    return JsonResponse({
-        "loggedIn": True,
         "avatar": user.avatar.url if user.avatar else None,
         "username": user.username,
         "email": user.email
     })
 
+# KIỂM TRA LOGIN
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def api_me(request):
+    user = request.user
 
-# ĐĂNG XUẤT
-def api_logout(request):
-    logout(request)
-    return JsonResponse({"success": True})
+    if not user or not user.is_authenticated:
+        return Response({"loggedIn": False})
+
+    return Response({
+        "loggedIn": True,
+        "avatar": user.avatar.url if user.avatar else None,
+        "username": user.username,
+        "email": user.email
+    })

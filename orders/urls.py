@@ -1,9 +1,11 @@
 from django.urls import path
-from .views import api_pay_order, api_cancel_order, api_create_order, api_my_tickets
+import orders.views as views
 
 urlpatterns = [
-    path("<int:order_id>/pay/", api_pay_order),
-    path("<int:order_id>/cancel/", api_cancel_order),
-    path("create/", api_create_order),
-    path("my-tickets/", api_my_tickets),
+    path("<int:order_id>/pay/", views.api_pay_order),
+    path("<int:order_id>/cancel/", views.api_cancel_order),
+    path("create/", views.api_create_order),
+    path("my-tickets/", views.api_my_tickets),
+    path("<int:order_id>/add-items/", views.api_add_items),
+    path("payment-return/", views.payment_return),
 ]

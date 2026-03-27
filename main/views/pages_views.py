@@ -14,26 +14,21 @@ def event_detail(request, event_id):
     return render(request, "chitietsukien.html", {"event_id": event_id})
 
 # MY TICKETS PAGE 
-@login_required(login_url="/")
 def my_tickets(request):
     return render(request, "vecuatoi.html")
 
 
 # USER PAGE
-@login_required(login_url="/")
 def user_page(request):
     return render(request, "userpage.html")
 
 
 # MY EVENTS PAGE (CẤM XÓA)
-@login_required(login_url="/")
 def my_events(request):
     return render(request, "sukiencuatoi.html")
 
-# ORDER PAGE
-@login_required(login_url="/")
-def orders_page(request):
-    return render(request, "orderspage.html")
+def orders_page(request, event_id):
+    return render(request, "orderspage.html", {"event_id": event_id})
 
 # SEARCH
 def search(request):

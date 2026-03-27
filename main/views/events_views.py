@@ -38,6 +38,7 @@ def api_event_detail(request, event_id):
         "moTa": event.description,
         "tickets": [
             {
+                "id": t.id,
                 "loai": t.name,
                 "gia": float(t.price)
             }

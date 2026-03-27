@@ -1,26 +1,28 @@
-    export function initSignUp(){
-        const form = document.getElementById("signUp-form");
-        if (!form) return;
+import { clearTokens, setTokens } from "./token.js";
+import { publicFetch } from "./generalApi.js";
+import { unlockAuthUI } from "./authGuard.js";
 
-        form.addEventListener("submit", async (e)=>{
+export function initSignUp(){
+    const form = document.getElementById("signUp-form");
+    if (!form) return;
 
-            e.preventDefault();
+    form.addEventListener("submit", async (e)=>{
+        e.preventDefault();
 
-            const username = form.username.value.trim();
-            const email = form.email.value.trim();
-            const password = form.password.value;
-            const confirm = form.password_confirm.value;
+        const username = form.username.value.trim();
+        const email = form.email.value.trim();
+        const password = form.password.value;
+        const confirm = form.password_confirm.value;
 
-            if (password !== confirm){
-                alert("Mật khẩu không khớp");
-                return;
-            }
+        if (password !== confirm){
+            alert("Mật khẩu không khớp");
+            return;
+        }
 
-            const data = await sendAuthRequest("/api/signup/",
-            {
-                username,
-                email,
-                password,
+        try {
+            const data = await publicFetch("/api/signup/", {
+                method: "POST",
+                body: JSON.stringify({ username, email, password })
             });
 
             if (data.success){
@@ -30,57 +32,45 @@
                 alert(data.message || data.error);
             }
 
-        });
-    }
+        } catch (err) {
+            console.error(err);
+            alert("Signup failed");
+        }
+    });
+}
 
-    export function initLogin(){
-        const form = document.getElementById("login-form");
-        if (!form) return;
+export function initLogin(){
+    const form = document.getElementById("login-form");
+    if (!form) return;
 
-        form.addEventListener("submit", async (e)=>{
+    form.addEventListener("submit", async (e)=>{
+        e.preventDefault();
 
-            e.preventDefault();
+        const username = form.username.value.trim();
+        const password = form.password.value;
 
-            const username = form.username.value.trim();
-            const password = form.password.value;
-
-            const data = await sendAuthRequest("/api/login/",
-            {
-                username,
-                password
+        try {
+            const data = await publicFetch("/api/login/", {
+                method: "POST",
+                body: JSON.stringify({ username, password })
             });
 
             if (data.success){
+                setTokens(data);
+                unlockAuthUI();
                 location.reload();
             } else{
                 alert(data.message || data.error);
             }
-        });
-    }
 
-    function getCSRFToken(){
-        const name = "csrftoken";
-        const cookies = document.cookie.split(";");
-
-        for (let cookie of cookies) {
-            cookie = cookie.trim();
-            if (cookie.startsWith(name + "=")) {
-                return cookie.substring(name.length + 1);
-            }
+        } catch (err) {
+            console.error(err);
+            alert("Login failed");
         }
-        return null;
-    }
+    });
+}
 
-    async function sendAuthRequest(url, payload){
-        const result = await fetch(url,{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json",
-                "X-CSRFToken": getCSRFToken()
-            },
-            body:JSON.stringify(payload)
-        });
-
-        return await result.json();
-    }
-
+export function logout() {
+    clearTokens();
+    window.location.href = "/"; // or "/login/"
+}

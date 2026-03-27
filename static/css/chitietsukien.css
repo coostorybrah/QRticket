@@ -527,7 +527,7 @@ main {
   font-weight: bold;
   color: #4dba83;
 }
-.banner__info .price #nuyBtn {
+.banner__info .price #orderLink {
   color: white;
   background: #26bc71;
   padding: 5px;
@@ -539,7 +539,7 @@ main {
   text-align: center;
   cursor: pointer;
 }
-.banner__info .price #nuyBtn:hover {
+.banner__info .price #orderLink:hover {
   color: #000000;
   background: whitesmoke;
 }

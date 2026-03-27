@@ -134,6 +134,7 @@ STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
 
+# REST FRAMEWORK & JWT
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -144,4 +145,13 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
 }
 
+# EMAIL BACKEND
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+# VNPAY CONFIGS
+VNPAY_ENABLED = False
+
+VNPAY_TMN_CODE = ""
+VNPAY_HASH_SECRET = ""
+VNPAY_URL = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html"
+VNPAY_RETURN_URL = "http://127.0.0.1:8000/api/orders/payment-return/"

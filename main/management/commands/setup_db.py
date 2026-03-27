@@ -2,8 +2,41 @@ import os
 from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.core.management import call_command
+from django.apps import apps
+import shutil
 
+def delete_migration_files(stdout):
+    for app_config in apps.get_app_configs():
+        # 🚫 Skip third-party apps
+        if "site-packages" in app_config.path:
+            continue
 
+        migrations_path = os.path.join(app_config.path, "migrations")
+
+        if not os.path.exists(migrations_path):
+            continue
+
+        for file in os.listdir(migrations_path):
+            file_path = os.path.join(migrations_path, file)
+
+            # ❌ Skip __init__.py
+            if file == "__init__.py":
+                continue
+
+            # 🧹 Remove __pycache__
+            if os.path.isdir(file_path):
+                shutil.rmtree(file_path)
+                stdout.write(f"🗑️ Deleted folder {file_path}")
+                continue
+
+            # ✅ Only delete migration-related files
+            if file.endswith(".py") or file.endswith(".pyc"):
+                try:
+                    os.remove(file_path)
+                    stdout.write(f"🗑️ Deleted {file_path}")
+                except Exception as e:
+                    stdout.write(f"⚠️ Could not delete {file_path}: {e}")
+            
 class Command(BaseCommand):
     help = "Setup database (makemigrations + migrate + seed)"
 
@@ -19,11 +52,16 @@ class Command(BaseCommand):
 
         # 🧨 Optional reset
         if options["reset"]:
+            # 🧨 Delete database
             if os.path.exists(db_path):
                 self.stdout.write(self.style.WARNING("🧨 Deleting existing database..."))
                 os.remove(db_path)
             else:
                 self.stdout.write("ℹ️ No database file found, skipping delete.")
+
+            # 🧹 Delete migration files
+            self.stdout.write(self.style.WARNING("🧹 Deleting migration files..."))
+            delete_migration_files(self.stdout)
 
         # 🆕 MAKE MIGRATIONS
         self.stdout.write("🛠️ Making migrations...")
@@ -39,3 +77,4 @@ class Command(BaseCommand):
 
         # ✅ DONE
         self.stdout.write(self.style.SUCCESS("✅ Database setup complete!"))
+        

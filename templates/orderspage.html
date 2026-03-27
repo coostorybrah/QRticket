@@ -12,10 +12,108 @@
 
 <!-- MAIN -->
 {% block main %}
+<div class="checkout">
 
+    <!-- LEFT: PAYMENT -->
+    <div class="payment">
+        <h2>Phương thức thanh toán</h2>
+
+        <img class="supported-card-type" src="" alt="Visa">
+        <img class="supported-card-type" src="" alt="Mastercard">
+
+        <button id="cardOptionBtn">Thẻ tín dụng / ghi nợ</button>
+        <button id="payPalOptionBtn">PayPal</button>
+
+        <h3>Thông tin</h3>
+        <form id="paymentForm">
+            <div class="card-info-container">
+                <img id="cardIcon" src="" alt="card-icon">
+                <input class="card-info" type="text" id="cardNumber" placeholder="Card number" required>
+                <input class="card-info" type="text" id="cardExpDate" maxlength="7" placeholder="MM / YY" required>
+                <input class="card-info" type="text" pattern="[0-9]{3,4}" id="cardVerValue" placeholder="CVV" required>
+            </div>
+
+            <!-- NAME -->
+            <div>
+                <label for="buyerName">Họ và tên</label>
+                <input id="buyerName" name="buyer_name" placeholder="Họ và tên" required>
+            </div>
+            
+            <!-- CONTACTS -->
+            <div class="contacts">
+                <div>
+                    <label for="buyerEmail">Email</label>
+                    <input type="email" id="buyerEmail" name="buyer_email" required>
+                </div>
+
+                <div>
+                    <label for="buyerPhone">Phone</label>
+                    <input type="tel" id="buyerPhone" name="buyer_phone" required>
+                </div>
+            </div>
+
+            <!-- COUNTRY -->
+            <label for="buyerCountry">Country</label>
+            <select id="buyerCountry" name="buyer_country">
+                <option value="VN" selected>Vietnam</option>
+            </select>
+
+            <!-- POSTAL -->
+            <div>
+                <label for="buyerPostal">Postal</label>
+                <input id="buyerPostal" name="buyer_postal" placeholder="(optional)">
+            </div>
+            
+            <button type="submit" id="payBtn">Thanh toán</button>
+        </form>
+    </div>
+
+    <!-- RIGHT: ORDER -->
+    <div class="order">
+
+        <h2>Giỏ hàng</h2>
+
+        <!-- EVENT INFO -->
+        <div class="event-info">
+            <div>Vé sự kiện: <span id="eventName"></span></div>
+            <img id="eventImage" src="" alt="event-image">
+        </div>
+
+        <!-- TICKET LIST -->
+        <div class="ticket-list-container">
+            <div id="ticketList"></div>
+        </div>
+
+        <hr>
+        <h3>Tổng tiền: <span id="totalPrice">0</span></h3>
+    </div>
+</div>
 {% endblock %}
 
 <!-- SCRIPTS -->
 {% block scripts %}
+<script>
+    const event_id = "{{ event_id }}";
 
+    document.addEventListener("DOMContentLoaded", () => {
+        const expDateInput = document.getElementById("cardExpDate");
+
+        expDateInput.addEventListener("input", (e) => {
+            let value = e.target.value.replace(/\D/g, "");
+
+            if (value.length >= 2) {
+                let month = Math.min(Math.max(parseInt(value.slice(0, 2)), 1), 12);
+                value = month.toString().padStart(2, "0") + value.slice(2);
+            }
+
+            if (value.length >= 3) {
+                value = value.slice(0, 2) + " / " + value.slice(2, 4);
+            }
+
+            e.target.value = value;
+        });
+    });
+</script>
+
+<script type="module" src="{% static 'js/orderspage.js' %}"></script>
 {% endblock %}
