@@ -6,7 +6,7 @@ from orders.models import Ticket
 
 
 @api_view(["POST"])
-@permission_classes([IsAuthenticated])  # later: staff-only
+@permission_classes([IsAuthenticated])
 def api_check_in_ticket(request):
     ticket_id = request.data.get("ticket_id")
 
@@ -15,19 +15,30 @@ def api_check_in_ticket(request):
 
     try:
         ticket = Ticket.objects.select_related(
-            "ticket_type__event"
+            "ticket_type__event__organizer"
         ).get(id=ticket_id)
     except Ticket.DoesNotExist:
         return Response({"error": "Invalid ticket"}, status=404)
 
+    event = ticket.ticket_type.event
+
+    # 🔥 Ownership check
+    if not hasattr(request.user, "organizer"):
+        return Response({"error": "Not an organizer"}, status=403)
+
+    if event.organizer_id != request.user.organizer.id:
+        return Response({"error": "Not allowed for this event"}, status=403)
+
+    # ❌ Already used
     if ticket.is_used:
         return Response({"error": "Ticket already used"}, status=400)
 
+    # ✅ Mark used
     ticket.is_used = True
     ticket.save()
 
     return Response({
         "status": "success",
-        "event": ticket.ticket_type.event.name,
+        "event": event.name,
         "ticket_type": ticket.ticket_type.name
     })

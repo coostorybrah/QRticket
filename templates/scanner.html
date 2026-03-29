@@ -1,0 +1,20 @@
+<script src="https://unpkg.com/html5-qrcode"></script>
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+<title>QRticket - Scanner</title>
+{% endblock %}
+
+{% block main %}
+<div class="scanner">
+    <h2>Quét vé</h2>
+
+    <div id="video"></div>
+
+    <p id="result"></p>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="{% static 'js/scanner.js' %}"></script>
+{% endblock %}

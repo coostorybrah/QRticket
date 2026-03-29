@@ -69,11 +69,14 @@ def api_login(request):
 
     return Response({
         "success": True,
+        "loggedIn": True,
         "access": str(refresh.access_token),
         "refresh": str(refresh),
 
         "avatar": user.avatar.url if user.avatar else None,
         "username": user.username,
+        "is_organizer": hasattr(user, "organizer"),
+        "is_staff": user.is_staff,
         "email": user.email
     })
 
@@ -83,12 +86,11 @@ def api_login(request):
 def api_me(request):
     user = request.user
 
-    if not user or not user.is_authenticated:
-        return Response({"loggedIn": False})
-
     return Response({
         "loggedIn": True,
         "avatar": user.avatar.url if user.avatar else None,
         "username": user.username,
+        "is_organizer": hasattr(user, "organizer"),
+        "is_staff": user.is_staff,
         "email": user.email,
     })

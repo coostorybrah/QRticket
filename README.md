@@ -28,6 +28,11 @@ Xem QRticket_ERD(final).png.
 - - 6 thể loại sự kiện (Category).
 - - Mỗi Organizer tổ chức 3 sự kiện, mỗi sự kiện chỉ có 1 organizer.
 
+- superuser:
+
+- - username: paygorn123
+- - password: ilikepaygorn
+
 #### 2.1 USERS
 
 - Toàn bộ user có khả năng đăng nhập, đăng ký và logout:

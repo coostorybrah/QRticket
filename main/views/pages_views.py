@@ -29,6 +29,14 @@ def my_events(request):
 def orders_page(request, event_id):
     return render(request, "orderspage.html", {"event_id": event_id})
 
+# AFTER PAYMENT PAGE
+def payment_return(request):
+    return render(request, "orders/paymentreturn.html")
+
+# SCANNER PAGE
+def scanner_page(request):
+    return render(request, "scanner.html")
+
 # ORDER FAILED
 def orders_failed(request):
     paypal_id = request.GET.get("token")
@@ -45,10 +53,6 @@ def orders_failed(request):
     return render(request, "orders/ordersfailed.html", {
         "order_id": order_id
     })
-
-# AFTER PAYMENT PAGE
-def payment_return(request):
-    return render(request, "orders/paymentreturn.html")
 
 # SEARCH
 def search(request):

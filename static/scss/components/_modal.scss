@@ -50,10 +50,12 @@
 
     width: 50%;
     height: auto;
-    min-width: 250px;
-    min-height: 200px;
+    min-width: 300px;
+    min-height: 300px;
+    
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 // MODAL CLOSE BUTTON

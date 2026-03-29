@@ -10,6 +10,7 @@ urlpatterns = [
     path("orders/<str:event_id>/", views.orders_page, name="orders_page"),
     path("orders-failed/", views.orders_failed, name="orders_failed"),
     path("payment-return/", views.payment_return, name="payment_return"),
+    path("scanner/", views.scanner_page, name="scanner"),
     
     # REFRESH JWT TOKEN API
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
