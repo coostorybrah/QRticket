@@ -1,6 +1,7 @@
 # THÔNG BÁO CHUNG
 
-Để đảm bảo mọi người cùng làm việc trong cùng môi trường, sau khi tạo venv chạy lệnh:
+Để đảm bảo mọi người cùng làm việc trong cùng môi trường, tạo venv, mở venv và chạy lệnh:
+
 python -m pip install -r requirements.txt
 
 ## A. GIỚI HẠN CÔNG VIỆC
@@ -48,5 +49,5 @@ Xem QRticket_ERD(final).png.
 
 #### 2.2 EVENTS
 
-- Status: Bao gồm "pending", "approved" và "rejected", chỉ có các sự kiện "approved" được hiển thị trên web.
+- Status: Bao gồm "pending", "approved" và "rejected", chỉ có các sự kiện "approved" được hiển thị trên web. (KHÔNG LÀM)
 - Gồm 2 property: "price__max" và "price__min".

@@ -20,7 +20,7 @@ export function initSignUp(){
         }
 
         try {
-            const data = await publicFetch("/api/signup/", {
+            const data = await publicFetch("/api/auth/signup/", {
                 method: "POST",
                 body: JSON.stringify({ username, email, password })
             });
@@ -50,7 +50,7 @@ export function initLogin(){
         const password = form.password.value;
 
         try {
-            const data = await publicFetch("/api/login/", {
+            const data = await publicFetch("/api/auth/login/", {
                 method: "POST",
                 body: JSON.stringify({ username, password })
             });

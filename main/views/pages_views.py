@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
 
 from events.models import Event, Venue, Category
+from orders.models import Order
 
 import json
 
@@ -17,18 +17,38 @@ def event_detail(request, event_id):
 def my_tickets(request):
     return render(request, "vecuatoi.html")
 
-
 # USER PAGE
 def user_page(request):
     return render(request, "userpage.html")
-
 
 # MY EVENTS PAGE (CẤM XÓA)
 def my_events(request):
     return render(request, "sukiencuatoi.html")
 
+# ORDER PAGE
 def orders_page(request, event_id):
     return render(request, "orderspage.html", {"event_id": event_id})
+
+# ORDER FAILED
+def orders_failed(request):
+    paypal_id = request.GET.get("token")
+
+    order_id = None
+
+    if paypal_id:
+        try:
+            order = Order.objects.get(payment_id=paypal_id)
+            order_id = order.id
+        except Order.DoesNotExist:
+            pass
+
+    return render(request, "orders/ordersfailed.html", {
+        "order_id": order_id
+    })
+
+# AFTER PAYMENT PAGE
+def payment_return(request):
+    return render(request, "orders/paymentreturn.html")
 
 # SEARCH
 def search(request):

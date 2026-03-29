@@ -14,9 +14,21 @@ class Order(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="PENDING")
     created_at = models.DateTimeField(auto_now_add=True)
 
+    # BUYER INFO
     buyer_name = models.CharField(max_length=255, null=True, blank=True)
-    buyer_email = models.EmailField(null=True, blank=True)
+    buyer_email = models.CharField(max_length=255, null=True, blank=True)
     buyer_phone = models.CharField(max_length=20, null=True, blank=True)
+
+    # PAYMENT INFO
+    payment_provider = models.CharField(max_length=20, null=True, blank=True)
+    payment_id = models.CharField(max_length=255, null=True, blank=True)
+    paid_at = models.DateTimeField(null=True, blank=True)
+
+    def get_total_price(self):
+        return sum(
+            item.ticket_type.price * item.quantity
+            for item in self.items.all()
+        )
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="items")

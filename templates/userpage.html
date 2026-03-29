@@ -71,12 +71,7 @@
 
 {% block scripts %}
 <script type="module">
-    import { 
-        initAvatarUpload, 
-        initUsernameUpdate, 
-        initPasswordChange,
-        initUserInfo
-    } from "{% static 'js/userpage.js' %}";
+    import { initAvatarUpload, initUsernameUpdate, initPasswordChange,initUserInfo } from "{% static 'js/userpage.js' %}";
 
     initUserInfo(); 
     initAvatarUpload();

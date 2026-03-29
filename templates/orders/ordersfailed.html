@@ -1,0 +1,23 @@
+<h2>Payment unsuccessful</h2>
+<p>Your payment was cancelled or failed.</p>
+<a href={% url "home" %}>Go back</a>
+
+<script>
+    const orderId = "{{ order_id|default:'' }}";
+
+    if (orderId) {
+        fetch(`/api/orders/${orderId}/cancel/`, {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("access")}`
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log("Order cancelled:", data);
+        })
+        .catch(err => {
+            console.error("Cancel failed", err);
+        });
+    }
+</script>

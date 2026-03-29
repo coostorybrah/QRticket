@@ -6,7 +6,7 @@ export async function initHeader() {
     if (!container) return;
 
     try {
-        const data = await apiFetch("/api/me/");
+        const data = await apiFetch("/api/auth/me/");
 
         if (!data.loggedIn) {
             renderGuest(container);

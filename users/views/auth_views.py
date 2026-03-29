@@ -7,8 +7,6 @@ from rest_framework.response import Response
 
 from rest_framework_simplejwt.tokens import RefreshToken
 
-import json
-
 User = get_user_model()
 
 # ĐĂNG KÝ
@@ -92,5 +90,5 @@ def api_me(request):
         "loggedIn": True,
         "avatar": user.avatar.url if user.avatar else None,
         "username": user.username,
-        "email": user.email
+        "email": user.email,
     })

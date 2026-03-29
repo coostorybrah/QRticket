@@ -53,7 +53,7 @@ export function initAvatarUpload() {
         try {
             const token = localStorage.getItem("access");
 
-            const res = await fetch("/api/upload-avatar/", {
+            const res = await fetch("/api/user/upload-avatar/", {
                 method: "POST",
                 body: formData,
                 headers: {
@@ -102,7 +102,7 @@ export function initUsernameUpdate() {
         btn.disabled = true;
 
         try {
-            const data = await apiFetch("/api/update-username/", {
+            const data = await apiFetch("/api/user/update-username/", {
                 method: "POST",
                 body: JSON.stringify({ username })
             });
@@ -125,7 +125,7 @@ export function initUsernameUpdate() {
 // SHOW USER INFO
 export async function initUserInfo() {
     try {
-        const data = await apiFetch("/api/me/");
+        const data = await apiFetch("/api/auth/me/");
 
         if (!data.loggedIn) return;
 
@@ -167,7 +167,7 @@ export function initPasswordChange() {
         btn.disabled = true;
 
         try {
-            const data = await apiFetch("/api/change-password/", {
+            const data = await apiFetch("/api/user/change-password/", {
                 method: "POST",
                 body: JSON.stringify({
                     current_password: current,

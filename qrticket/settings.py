@@ -26,7 +26,11 @@ SECRET_KEY = 'django-insecure-5dh5iyyllb@wv+imxqpk+bj557m-=heg&zk%o3#w18#u&!3rcv
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "unabolishable-subautomatically-rod.ngrok-free.dev",
+    ]
 
 
 # Application definition
@@ -45,6 +49,7 @@ INSTALLED_APPS = [
     'users',
     'main',
     'orders',
+    "payments", 
     
 ]
 
@@ -148,10 +153,12 @@ SIMPLE_JWT = {
 # EMAIL BACKEND
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-# VNPAY CONFIGS
-VNPAY_ENABLED = False
+# PAYPAL CONFIG
+PAYPAL_CLIENT_ID = "AQThCwf3Np01FZe11WvpbVRcKrFnbZGcWsl5KJUSJUOYWYFSRQD0k2QPDt8O31mh7UJAMmWc3uuu1UcA"
+PAYPAL_CLIENT_SECRET = "EMbk9iCMalPvzBVxfQDivIJ55De676R7TVbMf9N0AFLOSj6vyZMTxpi0rqcWiqfN3-VKKHr-Gn6kKBHH"
 
-VNPAY_TMN_CODE = ""
-VNPAY_HASH_SECRET = ""
-VNPAY_URL = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html"
-VNPAY_RETURN_URL = "http://127.0.0.1:8000/api/orders/payment-return/"
+# sandbox vs live
+PAYPAL_BASE_URL = "https://api-m.sandbox.paypal.com"
+
+# ngrok URL
+BASE_URL = "unabolishable-subautomatically-rod.ngrok-free.dev"

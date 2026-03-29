@@ -1,13 +1,18 @@
 import { createOrder, addItems, getPaymentUrl } from "./api.js";
 
-export function initCheckout(form, payBtn, getItems) {
+export function initCheckout(form, payBtn, getItems, getPaymentMethod) {
     let isProcessing = false;
 
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
-        
-        if (!form.checkValidity()) {
-            form.reportValidity(); // shows browser errors
+
+        if (getPaymentMethod() === "paypal")
+        {
+            return;
+        }
+
+        if (!form.noValidate && !form.checkValidity()) {
+            form.reportValidity();
             return;
         }
 
@@ -15,9 +20,6 @@ export function initCheckout(form, payBtn, getItems) {
         isProcessing = true;
 
         const items = getItems();
-        
-        // DEBUGGING
-        console.log("ITEMS SENT TO BACKEND:", items);
 
         if (items.length === 0) {
             alert("Vui lòng chọn ít nhất 1 vé");
@@ -25,6 +27,7 @@ export function initCheckout(form, payBtn, getItems) {
             return;
         }
 
+        
         payBtn.disabled = true;
         payBtn.innerText = "Đang xử lý...";
 
@@ -43,13 +46,12 @@ export function initCheckout(form, payBtn, getItems) {
 
             await addItems(orderId, items);
 
-            // Get VNPay URL
             const paymentData = await getPaymentUrl(orderId);
-            if (!paymentData || !paymentData.payment_url) {
+
+            if (!paymentData?.payment_url) {
                 throw new Error("Invalid payment URL");
             }
-            
-            // Redirect to VNPay
+
             window.location.href = paymentData.payment_url;
 
         } catch (err) {

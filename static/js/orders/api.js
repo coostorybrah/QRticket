@@ -9,7 +9,7 @@ export function fetchEvent(eventId) {
 
 // CREATE ORDER
 export function createOrder(data) {
-    return apiFetch("/api/orders/create/", {
+    return apiFetch("/api/orders/", {
         method: "POST",
         body: JSON.stringify(data),
     });
@@ -18,14 +18,14 @@ export function createOrder(data) {
 
 // ADD TICKETS TO ORDER
 export function addItems(orderId, items) {
-    return apiFetch(`/api/orders/${orderId}/add-items/`, {
+    return apiFetch(`/api/orders/${orderId}/items/`, {
         method: "POST",
         body: JSON.stringify({ items }),
     });
 }
 
 
-// VNPAY PAYMENT URL
+// PAYMENT URL
 export function getPaymentUrl(orderId) {
     return apiFetch(`/api/orders/${orderId}/pay/`, {
         method: "GET",

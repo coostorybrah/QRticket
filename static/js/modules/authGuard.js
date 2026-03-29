@@ -4,7 +4,7 @@ let authLocked = false;
 
 export async function requireAuth() {
     try {
-        const data = await apiFetch("/api/me/");
+        const data = await apiFetch("/api/auth/me/");
 
         if (!data.loggedIn) {
             lockAuthUI();
