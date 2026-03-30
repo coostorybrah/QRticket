@@ -18,18 +18,40 @@ async function loadTickets() {
             return;
         }
 
-        container.innerHTML = data.map(ticket => `
-            <div class="ticket-card">
-                <h3>${ticket.event}</h3>
-                <p>${ticket.ticket_type}</p>
-                <p>${ticket.date || ""}</p>
-                <img src="${ticket.qr_code}" alt="QR Code">
+        const grouped = {};
 
-                <p class="${ticket.is_used ? 'used' : 'unused'}">
-                    ${ticket.is_used ? "Đã sử dụng" : "Chưa sử dụng"}
-                </p>
-            </div>
-        `).join("");
+        data.forEach(ticket => {
+            const key = ticket.event;
+
+            if (!grouped[key]) {
+                grouped[key] = [];
+            }
+
+            grouped[key].push(ticket);
+        });
+
+        // SORT events by date
+        const sortedEvents = Object.entries(grouped).sort((a, b) => {
+            return new Date(a[1][0].date || 0) - new Date(b[1][0].date || 0);
+        });
+
+        container.innerHTML = sortedEvents.map(([event, tickets]) => {
+            return `
+                <div class="event-group">
+                    <h2>${event}</h2>
+                    ${tickets.map(ticket => `
+                        <div class="ticket-card">
+                            <p>${ticket.ticket_type}</p>
+                            <p>${ticket.date || ""}</p>
+                            <img src="${ticket.qr_code}">
+                            <p class="${ticket.is_used ? 'used' : 'unused'}">
+                                ${ticket.is_used ? "Đã sử dụng" : "Chưa sử dụng"}
+                            </p>
+                        </div>
+                    `).join("")}
+                </div>
+            `;
+        }).join("");
 
     } catch (err) {
         console.error(err);

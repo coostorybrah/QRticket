@@ -52,3 +52,9 @@ class Ticket(models.Model):
     is_used = models.BooleanField(default=False)
 
     created_at = models.DateTimeField(auto_now_add=True)
+    
+class CheckInLog(models.Model):
+    ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE)
+    scanned_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    scanned_at = models.DateTimeField(auto_now_add=True)
+    success = models.BooleanField()

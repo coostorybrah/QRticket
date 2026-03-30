@@ -33,7 +33,10 @@ function renderGuest(container) {
 function renderUser(container, user) {
     container.innerHTML = `
         <a class="eventManager wrapper" href="${window.URLS.myEvents}">Tạo sự kiện</a>
-        <a class="ticketManager wrapper" href="${window.URLS.myTickets}">Vé của tôi</a>
+        
+        ${user.is_organizer ?
+        `<a class="scanner wrapper" href="${window.URLS.scanner}">Quét vé</a>` : 
+        `<a class="ticketManager wrapper" href="${window.URLS.myTickets}">Vé của tôi</a>`}
 
         <div id="userMenu" class="dropdown-hover">
             <a id="userWrapper" href="${window.URLS.userPage}">

@@ -15,9 +15,9 @@ export function renderTickets(ticketList, tickets) {
             </div>
 
             <div class="ticket-controls">
-                <button class="minus">-</button>
+                <button class="minus quantity-input">-</button>
                 <span class="qty">0</span>
-                <button class="plus">+</button>
+                <button class="plus quantity-input">+</button>
             </div>
         </div>
         `;

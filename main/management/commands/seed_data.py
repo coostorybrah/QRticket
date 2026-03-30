@@ -36,7 +36,7 @@ class Command(BaseCommand):
             )
 
             if created:
-                user.set_password("password123")
+                user.set_password("paygorn4life")
                 user.save()
             if not user.email:
                 user.email = f"customer{i+1}@gmail.com"
@@ -56,7 +56,7 @@ class Command(BaseCommand):
             )
 
             if created:
-                user.set_password("password123")
+                user.set_password("paygorn4life")
                 user.save()
             if not user.email:
                 user.email = f"admin{i+1}@gmail.com"
@@ -94,7 +94,7 @@ class Command(BaseCommand):
             )
 
             if created:
-                user.set_password("password123")
+                user.set_password("paygorn4life")
                 user.save()
             else:
                 if not user.email:

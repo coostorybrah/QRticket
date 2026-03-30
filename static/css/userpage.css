@@ -163,7 +163,7 @@ header .others__modalTrigger {
   min-width: 96px;
 }
 
-@media (max-width: 868px) and (min-width: 461.6px) {
+@media (max-width: 899.2px) and (min-width: 461.6px) {
   header {
     flex-direction: row;
     justify-content: center;
@@ -225,10 +225,11 @@ header .others__modalTrigger {
   border-radius: 10px;
   width: 50%;
   height: auto;
-  min-width: 250px;
-  min-height: 200px;
+  min-width: 300px;
+  min-height: 250px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 .close {
@@ -274,23 +275,36 @@ header .others__modalTrigger {
 .login__body {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  align-items: center;
   flex-grow: 1;
   width: 100%;
   height: 80%;
 }
 .login__body form {
-  margin-top: 5px;
   width: 100%;
-  height: 100%;
+  min-height: 150px;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.login__body form .login-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .login__body form input {
   padding: 3px;
   margin-top: 5px;
   width: 80%;
-  height: 2em;
+  height: 2rem;
+  max-height: 2rem;
   border-radius: 6px;
-  border-width: 1px solid #000000;
+  border: 2px solid #000000;
   flex-grow: 1;
   font-size: medium;
 }
@@ -306,6 +320,7 @@ header .others__modalTrigger {
   margin-bottom: 5px;
   width: 60%;
   height: 30px;
+  max-height: 30px;
   flex-grow: 1;
   font-weight: bold;
   font-size: large;

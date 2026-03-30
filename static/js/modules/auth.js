@@ -3,7 +3,7 @@ import { publicFetch } from "./generalApi.js";
 import { unlockAuthUI } from "./authGuard.js";
 
 export function initSignUp(){
-    const form = document.getElementById("signUp-form");
+    const form = document.getElementById("signUpForm");
     if (!form) return;
 
     form.addEventListener("submit", async (e)=>{
@@ -40,7 +40,7 @@ export function initSignUp(){
 }
 
 export function initLogin(){
-    const form = document.getElementById("login-form");
+    const form = document.getElementById("loginForm");
     if (!form) return;
 
     form.addEventListener("submit", async (e)=>{

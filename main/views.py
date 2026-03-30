@@ -69,7 +69,7 @@ def search(request):
     else:
         price_max = None
 
-    events = Event.objects.all()
+    events = Event.objects.filter(status="approved")
 
     # FILTER
     if query:

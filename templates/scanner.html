@@ -1,6 +1,11 @@
 <script src="https://unpkg.com/html5-qrcode"></script>
 {% extends "base.html" %}
 {% load static %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/scanner.css' %}">
+{% endblock %}
+
 {% block title %}
 <title>QRticket - Scanner</title>
 {% endblock %}
@@ -9,7 +14,16 @@
 <div class="scanner">
     <h2>Quét vé</h2>
 
-    <div id="video"></div>
+        <div id="video">
+            <div class="scan-overlay">
+                <div class="scan-frame">
+                    <div class="scan-line"></div>
+                </div>
+            </div>
+        </div>
+
+        <p id="result"></p>
+    </div>
 
     <p id="result"></p>
 </div>

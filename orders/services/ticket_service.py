@@ -19,7 +19,7 @@ def generate_qr_for_order(order_id):
                 ticket_type=item.ticket_type
             )
 
-            data = f"ticket:{ticket.id}"
+            data = f"ticket:{ticket.id}:{int(ticket.created_at.timestamp())}"
 
             qr = qrcode.make(data)
 

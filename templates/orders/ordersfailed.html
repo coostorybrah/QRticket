@@ -2,22 +2,18 @@
 <p>Your payment was cancelled or failed.</p>
 <a href={% url "home" %}>Go back</a>
 
-<script>
+<script type="module">
+    import { apiFetch } from "/static/js/modules/generalApi.js";
+
     const orderId = "{{ order_id|default:'' }}";
 
     if (orderId) {
-        fetch(`/api/orders/${orderId}/cancel/`, {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("access")}`
-            }
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log("Order cancelled:", data);
-        })
-        .catch(err => {
+        try {
+            await apiFetch(`/api/orders/${orderId}/cancel/`, {
+                method: "POST"
+            });
+        } catch (err) {
             console.error("Cancel failed", err);
-        });
+        }
     }
 </script>

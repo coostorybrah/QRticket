@@ -104,7 +104,7 @@ paypalTab.onclick = () => {
     paypalTab.classList.add("active");
     cardBtn.classList.remove("active");
 
-    // 🔥 disable form validation
+    // Disable form validation
     form.noValidate = true;
 };
 
@@ -120,11 +120,20 @@ initCheckout(
 
 // PAYPAL FLOW
 paypalBtn.addEventListener("click", async () => {
+    if (paypalBtn.disabled) {
+        return;
+    }
+
+    paypalBtn.disabled = true;
+    paypalBtn.innerText = "Đang xử lý...";
+    
     try {
         const items = getSelectedItems();
 
         if (items.length === 0) {
             alert("Vui lòng chọn ít nhất 1 vé");
+            paypalBtn.disabled = false;
+            paypalBtn.innerText = "PayPal";
             return;
         }
 
@@ -134,6 +143,9 @@ paypalBtn.addEventListener("click", async () => {
 
         if (!buyerName || !buyerEmail || !buyerPhone) {
             alert("Vui lòng nhập đầy đủ thông tin");
+            paypalBtn.disabled = false;
+            paypalBtn.innerText = "PayPal";
+
             return;
         }
 
@@ -162,5 +174,7 @@ paypalBtn.addEventListener("click", async () => {
     } catch (err) {
         console.error(err);
         alert("Có lỗi xảy ra khi thanh toán PayPal");
+        paypalBtn.disabled = false;
+        paypalBtn.innerText = "PayPal";
     }
 });

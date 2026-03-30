@@ -10,7 +10,7 @@ def send_order_email(order_id):
 
     tickets = order.tickets.select_related("ticket_type__event")
 
-    message = f"Hello {order.buyer_name},\n\nYour tickets:\n\n"
+    message = f"Hello {order.buyer_name},\n\nThank you for your purchase, here are your tickets:\n\n"
 
     for t in tickets:
         message += (

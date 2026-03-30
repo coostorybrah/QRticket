@@ -7,13 +7,13 @@ python -m pip install -r requirements.txt
 ## A. GIỚI HẠN CÔNG VIỆC
 
 - Giống như đã phân từ trước.
-- Do thời gian có hạn nên chỉ tập trung vào làm các chức năng cho khách hàng (đọc phần B-2.1).
+- Do thời gian có hạn nên chỉ tập trung vào làm các chức năng cho khách hàng (đọc phần B-2.1), các chức năng sau sẽ được thêm tùy vào độ thiết yếu của chức năng.
 
 ## B. CẤU TRÚC DATABASE
 
 ### 0. SETUP
 
-Xem SETUP_GUIDE(MUST_READ).md
+Xem SETUP_GUIDE(MUST_READ).md.
 
 ### 1. LƯỢC ĐỒ QUAN HỆ
 
@@ -22,37 +22,105 @@ Xem QRticket_ERD(final).png.
 ### 2. GIẢI THÍCH
 
 - Database gốc gồm:
-- - 32 User (20 Customer, 2 Admin và 10 Organizer),
+- - 32 User (20 Customer, 2 Admin phụ + 1 admin chính và 10 Organizer),
 - - 30 sự kiện (Event, 3 pending, 24 approved, 3 rejected),
 - - 82 loại vé (TicketType, số lượng và phân loại dựa theo Event),
 - - 6 thể loại sự kiện (Category).
 - - Mỗi Organizer tổ chức 3 sự kiện, mỗi sự kiện chỉ có 1 organizer.
 
-- superuser:
-
-- - username: paygorn123
-- - password: ilikepaygorn
-
 #### 2.1 USERS
 
-- Toàn bộ user có khả năng đăng nhập, đăng ký và logout:
+- Toàn bộ user có khả năng đăng nhập, đăng ký, xem thông tin cá nhân và logout:
 
 - - User gồm có 3 role: Customer, Admin và Organizer.
-- - Customer có khả năng đặt vé sự kiện và thanh toán;
-- - Admin có chức năng chấp nhận (approve) hoặc từ chối (reject) sự kiện (KHÔNG LÀM);
-- - Organizer có khả năng tạo và thay đổi chi tiết sự kiện (KHÔNG LÀM).
-
-- Đăng nhập cho các tài khoản đã có sẵn trong DB:
-
-- - username: [role] + [number] (vd: customer1)
-- - Có thể đăng nhập bằng email: [username] + "@gmail.com"
-- - password: "password123"
-
-- Đăng ký:
-
-- - Tùy ý
+- - Customer có khả năng đặt vé sự kiện, thanh toán và sử dụng vé;
+- - Admin phụ có chức năng chấp nhận (approve) hoặc từ chối (reject) sự kiện; (KHÔNG LÀM)
+- - Admin chính có quyền chỉnh sửa toàn bộ dữ liệu;
+- - Organizer có khả năng scan vé, xem, tạo và thay đổi chi tiết sự kiện. (KHÔNG LÀM xem, tạo và thay đổi chi tiết sự kiện)
 
 #### 2.2 EVENTS
 
-- Status: Bao gồm "pending", "approved" và "rejected", chỉ có các sự kiện "approved" được hiển thị trên web. (KHÔNG LÀM)
-- Gồm 2 property: "price__max" và "price__min".
+- Có liên kết với thể loại (categories), được thể hiện qua thực thể yếu event_categories và địa điểm (venue);
+- Status: Bao gồm "pending", "approved" và "rejected", chỉ có các sự kiện "approved" được hiển thị trên web;
+- Gồm 2 property: "price__max" và "price__min". (Cho filter).
+
+#### 2.3 CATEGORIES VÀ EVENT_CATEGORIES
+
+- Mỗi event có thể có nhiều thể loại nhưng không được trùng lặp thể loại, quan hệ này được thể hiện bằng unique constrain của event_categories: UNIQUE(event_id, category_id).
+
+- CHÚ Ý: event_categories được tạo tự động bởi django (muốn kiểm tra thì vào dòng 83-87 events/models.py).
+
+#### 2.4 VENUES
+
+- Organizer không được bán số lượng vé vượt quá capacity. (KHÔNG LÀM)
+
+#### 2.5 TICKET_TYPES
+
+- Mỗi sự kiện có các loại vé khác nhau.
+
+#### 2.6 ORDERS
+
+- Bao gồm thông tin bắt buộc: người mua (buyer_[info]) (khác người dùng), khi đặt vé người mua sẽ nhận email kèm QR cho từng vé.
+
+#### 2.7 ORDER_ITEMS
+
+- Bao gồm thông tin loại vé được mua và số lượng vé thuộc loại đó.
+
+#### 2.8 TICKETS
+
+- MỘT vé bao gồm thông tin loại vé, mã QR tương ứng.
+
+- CHÚ Ý: Vé khác order_items, không thể kết hợp do chức năng khác nhau.
+
+## C. CHỨC NĂNG
+
+### 1. ĐĂNG NHẬP
+
+- Đăng nhập cho các tài khoản đã có sẵn trong DB:
+
+- - username: [role] + [number] (vd: customer1),
+- - Có thể đăng nhập bằng email: [username] + "@gmail.com",
+- - password: "paygorn4life".
+
+- CHÚ Ý:
+
+- - SUPERUSER (AKA TÀI KHOẢN ADMIN CHÍNH):
+
+- - - username: paygorn123
+- - - password: ilikepaygorn
+- - - Phải truy cập trang admin qua local domain (127.0.0.1:8000)
+
+- - Khi chưa đăng nhập, api kiểm tra thông tin người dùng báo lỗi là điều bình thường (Vì không có người dùng).
+
+#### 2. ĐĂNG KÝ
+
+- Tùy ý, không thể đăng ký tạo tài khoản admin.
+
+### 3. ĐĂNG XUẤT
+
+- Khi đăng xuất, JWT token được dọn dẹp và trang được tải lại.
+
+### 4. ĐẶT VÉ VÀ THANH TOÁN
+
+- Trang web có work flow chính như sau:
+
+- - Người dùng đăng nhập -> chọn sự kiện -> click nút mua vé -> sang trang order -> chọn số lượng cho từng loại vé -> thanh toán -> nhận thông báo + thông tin vé.
+
+- - CHÚ Ý: Không hỗ trợ chức năng giỏ hàng do người mua chỉ được phép mua vé cho một sự kiện mỗi khi tạo order.
+
+- ĐẶT VÉ:
+
+- - Khi đến trang order, người dùng phải nhập thông tin cá nhân (Tên, email và số điện thoại) và có ít nhất 1 vé trong "giỏ hàng".
+
+- THANH TOÁN:
+
+- - Gồm thanh toán qua paypal (sandbox) và card (KHÔNG LÀM card).
+
+### 5. THÔNG BÁO NGƯỜI MUA
+
+- Gửi email cho người mua bao gồm tên người mua và ảnh QR cho từng vé.
+
+### 6. QUÉT VÉ
+
+- Sau khi đăng nhập, Organizer truy cập scanner qua nút "Quét vé". (Chỉ Organizer mới có khả năng truy cập);
+- Organizer chỉ có thể quét vé cho sự kiện do bản thân tổ chức.

@@ -77,6 +77,7 @@ def api_login(request):
         "username": user.username,
         "is_organizer": hasattr(user, "organizer"),
         "is_staff": user.is_staff,
+        "is_superuser": user.is_superuser,
         "email": user.email
     })
 
@@ -92,5 +93,6 @@ def api_me(request):
         "username": user.username,
         "is_organizer": hasattr(user, "organizer"),
         "is_staff": user.is_staff,
+        "is_superuser": user.is_superuser,
         "email": user.email,
     })

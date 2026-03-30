@@ -1,16 +1,16 @@
 import { apiFetch } from "./modules/generalApi.js";
 import { requireAuth } from "./modules/authGuard.js";
 
-let scanning = true; // 🔒 global lock
+let scanning = true;
 
 document.addEventListener("DOMContentLoaded", async () => {
     const allowed = await requireAuth();
     if (!allowed) return;
 
-    const user = JSON.parse(localStorage.getItem("user"));
+    // 🔒 get real user from backend
+    const user = await apiFetch("/api/auth/me/");
 
-    // Allow only organizers
-    if (!user?.is_organizer) {
+    if (!user.is_organizer) {
         window.location.href = "/";
         return;
     }
@@ -18,27 +18,28 @@ document.addEventListener("DOMContentLoaded", async () => {
     startScanner();
 });
 
-
 function startScanner() {
     const resultEl = document.getElementById("result");
 
     const scanner = new Html5Qrcode("video");
 
+    const boxSize = 250;
+
     scanner.start(
         { facingMode: "environment" },
         {
             fps: 10,
-            qrbox: 250
+            qrbox: { width: boxSize, height: boxSize }
         },
         async (decodedText) => {
-            if (!scanning) return; // 🚫 prevent spam scans
+            if (!scanning) return;
 
-            scanning = false; // 🔒 lock
+            scanning = false;
 
             const ticketId = decodedText.split(":")[1];
 
             if (!ticketId) {
-                resultEl.innerText = "QR không hợp lệ";
+                setResult(resultEl, "QR không hợp lệ", "error");
                 return resetScanner(resultEl);
             }
 
@@ -49,30 +50,33 @@ function startScanner() {
                 });
 
                 if (data.status === "success") {
-                    resultEl.innerText = "✅ Vé hợp lệ";
+                    setResult(resultEl, "Vé hợp lệ", "success");
                 } else if (data.error) {
-                    resultEl.innerText = data.error;
+                    setResult(resultEl, data.error, "error");
                 } else {
-                    resultEl.innerText = "❌ Vé không hợp lệ";
+                    setResult(resultEl, "Vé không hợp lệ", "error");
                 }
 
             } catch (err) {
                 console.error(err);
-                resultEl.innerText = "❌ Lỗi kiểm tra vé";
+                setResult(resultEl, "Lỗi kiểm tra vé", "error");
             }
 
-            // ⏳ delay before next scan
             setTimeout(() => {
                 resetScanner(resultEl);
             }, 2500);
         },
-        (errorMessage) => {
-            // ignore scan errors
-        }
+        () => {}
     );
+}
+
+function setResult(el, text, type) {
+    el.innerText = text;
+    el.className = type;
 }
 
 function resetScanner(resultEl) {
     resultEl.innerText = "";
-    scanning = true; // 🔓 unlock
+    resultEl.className = "";
+    scanning = true;
 }

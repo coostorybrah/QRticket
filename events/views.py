@@ -5,7 +5,7 @@ from events.models import Event
 
 # DATA TOAN BO SU KIEN
 def api_events(request):
-    events = Event.objects.all()
+    events = Event.objects.filter(status="approved")
 
     data = {}
 
@@ -24,7 +24,7 @@ def api_events(request):
 
 # DATA CHI TIET SU KIEN
 def api_event_detail(request, event_id):
-    event = get_object_or_404(Event, slug=event_id)
+    event = get_object_or_404(Event, slug=event_id, status="approved")
 
     data = {
         "ten": event.name,

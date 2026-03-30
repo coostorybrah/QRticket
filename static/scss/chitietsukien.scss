@@ -37,12 +37,12 @@ main {
         height: 100%;
         padding: 15px;
         
-        border-radius: 20px 0 0 20px;
-        
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         align-items: flex-start;
+        
+        border-radius: 20px 0 0 20px;
 
         .text {
             width: 100%;
@@ -58,6 +58,7 @@ main {
                 font-size: medium;
                 font-style: italic;
                 font-weight: bold;
+
                 p {
                     margin-top: 5px;
                 }
@@ -91,14 +92,16 @@ main {
             }
 
             span {
-                margin-top: 5px;
-                font-weight: bold;
                 color: v.$active_text_color;
+
+                margin-top: 5px;
+
+                font-weight: bold;
             }
 
             #orderLink {
-                color: v.$header_text_color;
                 background: v.$btn_inactive_color;
+                color: v.$header_text_color;
                 
                 padding: 5px;
                 
@@ -110,11 +113,17 @@ main {
                 text-decoration: none;
                 text-align: center;
 
+                transition: ease;
+                transition-duration: 0.2s;
+
                 cursor: pointer;
                 
                 &:hover {
-                    color: v.$body_bg_color;
                     background: v.$btn_active_color;
+                    color: v.$body_bg_color;
+
+                    transition: ease;
+                    transition-duration: 0.2s;
                 }
             }
         }
