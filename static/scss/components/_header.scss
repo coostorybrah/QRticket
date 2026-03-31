@@ -4,7 +4,7 @@
 // COLOR VARIABLES
 
 // SIZE VARIABLES
-$header_min_width: 360px;
+$header_min_height: 61.5px;
 
 // HEADER
 header{
@@ -15,7 +15,8 @@ header{
     margin-left: 0;
     margin-right: 0;
     width: 100%;
-    min-width: $header_min_width;
+    min-height: $header_min_height;
+    max-height: 147.5px;
 
     display: flex;
     flex-direction: row;
@@ -62,7 +63,7 @@ header{
         align-items: center;
         flex-grow: 2;
         
-        margin-left: v.$margin_small_lr;
+        margin: 10px;
         max-width: 40%;
 
         input {
@@ -166,7 +167,8 @@ header{
 
 }
 
-@media (max-width: 868px ) and (min-width: 460.5px) {
+// MEDIA
+@media (max-width: 899.2px ) and (min-width: 461.6px) {
 
     header {
         flex-direction: row;
@@ -184,10 +186,11 @@ header{
 
 }
 
-@media (max-width: 460.5px) {
+@media (max-width: 461.6px) {
     header {
         flex-direction: column;
         justify-content: center;
+        flex-wrap: wrap;
 
         .logo {
             img {
@@ -198,7 +201,8 @@ header{
 
         .search_bar {
             max-width: 100%;
+            margin: 3px;
+
         }
     }
-    
 }

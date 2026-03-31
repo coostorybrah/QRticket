@@ -36,7 +36,7 @@ class Command(BaseCommand):
             )
 
             if created:
-                user.set_password("password123")
+                user.set_password("paygorn4life")
                 user.save()
             if not user.email:
                 user.email = f"customer{i+1}@gmail.com"
@@ -51,12 +51,12 @@ class Command(BaseCommand):
                 username = f"admin{i+1}",
                 defaults = {
                     "email": f"admin{i+1}@gmail.com",
-                    "is_staff": True
+                    "is_staff": True,
                     }
             )
 
             if created:
-                user.set_password("password123")
+                user.set_password("paygorn4life")
                 user.save()
             if not user.email:
                 user.email = f"admin{i+1}@gmail.com"
@@ -64,6 +64,24 @@ class Command(BaseCommand):
 
             admins.append(user)
 
+        # GOD HIMSELF
+        god_user, created = User.objects.get_or_create(
+            username="paygorn123",
+            defaults={
+                "email": "ilikepaygorn@gmail.com",
+            }
+        )
+
+        # GOD MUST ALWAYS HAVE AUTHORITY
+        if not god_user.is_superuser or not god_user.is_staff:
+            god_user.is_superuser = True
+            god_user.is_staff = True
+            god_user.save()
+
+        if created:
+            god_user.set_password("ilikepaygorn")
+            god_user.save()
+        
         # ORGANIZERS
         organizers = []
         for i in range(10):
@@ -76,7 +94,7 @@ class Command(BaseCommand):
             )
 
             if created:
-                user.set_password("password123")
+                user.set_password("paygorn4life")
                 user.save()
             else:
                 if not user.email:

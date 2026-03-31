@@ -21,7 +21,7 @@
         <!-- AVATAR -->
         <div class="avatar-wrapper">
             <img id="avatar"
-                src="{% if user.avatar %}{{ user.avatar.url }}{% else %}{% static 'images/avatars/default-avatar.png' %}{% endif %}">
+                src="{% static 'images/avatars/default-avatar.png' %}">
         </div>
         
         <form id="avatarForm" enctype="multipart/form-data">
@@ -32,12 +32,12 @@
         <form id="userInfoForm" class="info-wrapper">
             <div>
                 <p>Username:</p>
-                <input type="text" name="username" value="{{ user.username }}" class="info-input" placeholder="Nhập username vào đây">
+                <input id="usernameInput" type="text" name="username" value="{{ user.username }}" class="info-input" placeholder="Nhập username vào đây">
             </div>
             
             <div>
                 <p>Email:</p>
-                <input type="email" name="email" value="{{ user.email }}" disabled class="info-input">
+                <input id="emailInput" type="email" name="email" value="{{ user.email }}" class="info-input" disabled>
             </div>
             
             <button type="submit" class="info-submit">Cập nhật thông tin</button>
@@ -71,12 +71,9 @@
 
 {% block scripts %}
 <script type="module">
-    import { 
-        initAvatarUpload, 
-        initUsernameUpdate, 
-        initPasswordChange 
-    } from "{% static 'js/userpage.js' %}";
+    import { initAvatarUpload, initUsernameUpdate, initPasswordChange,initUserInfo } from "{% static 'js/userpage.js' %}";
 
+    initUserInfo(); 
     initAvatarUpload();
     initUsernameUpdate();
     initPasswordChange();

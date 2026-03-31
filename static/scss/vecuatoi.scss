@@ -2,9 +2,187 @@
 @use 'components/_variables' as v;
 @use 'components/_base' as *;
 @use 'components/_sidebar' as *;
-@use 'components/_tab' as *;
 
 // COLOR VARIABLES
+$event_info_background: #128e50;
+$event_group_background: #313131;
 
+$ticket_available_color: #1dc872;
+$ticket_unavailable_color: #9b9b9b;
+
+$ticket_separator_color: rgb(224, 224, 224, 0.8); 
 // SIZE VARIABLES
+$ticket_info_min_width: 97.3px;
+$event_group_max_width: 700px;
 
+#pageHeading {
+    margin: 10px 0 10px 0;
+
+    text-align: center
+}
+
+.event-group-container {
+    padding: 20px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.event-group {
+    background: $event_group_background;
+
+    width: 100%;
+    max-width: $event_group_max_width;
+
+    margin: 20px 0;
+    padding-bottom: 20px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 15px;
+
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.event-info {
+    background: $event_info_background;
+
+    text-align: center;
+
+    margin-bottom: 15px;
+    padding: 15px;
+
+}
+
+.venue-info {
+    margin-top: 5px;
+}
+
+.event-venue-name-text {
+    font-weight: bold;
+
+    margin-right: 5px;
+}
+
+.event-venue-address-text {
+    font-weight: bold;
+
+    margin-right: 5px;
+}
+
+.ticket-card {
+    width: 100%;
+    padding: 0 40px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    .ticket-image {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+
+        .qr-code {
+            flex-shrink: 1;
+        }
+
+        .ticket-status {
+            flex-shrink: 0;
+
+            text-align: center;
+        }
+    }
+
+    .ticket-info {
+        width: 40%;
+        min-width: $ticket_info_min_width;
+        
+        margin-right: 40px;
+
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .ticket-status.unused {
+        color: $ticket_available_color;
+        
+        font-weight: bold;
+    }
+
+    .ticket-status.used {
+        color: $ticket_unavailable_color;
+        
+        font-style: italic;
+        font-weight: bold;
+    }
+    
+}
+
+hr {
+    width: 100%;
+    
+    margin: 5px 0;
+
+    border: 1px solid white;
+}
+
+.ticket-separator {
+    border: none;
+    height: 1px;
+    background: repeating-linear-gradient(
+        to right,
+        $ticket_separator_color 0px,
+        $ticket_separator_color 15px,     /* dash length */
+        transparent 15px,
+        transparent 30px /* gap */
+    );
+}
+
+.text-separator {
+    font-size: 1.2rem;
+}
+
+// MEDIA 1
+@media (max-width: 610px) {
+    .ticket-card {
+        display: flex;
+        flex-direction: column;
+
+        .ticket-info {
+            width: 100%;
+
+            margin: 0 0 10px 0;
+        }
+    }
+}
+
+// MEDIA 2
+@media (max-width: 488px) {
+    .event-group-container {
+        padding: 20px 10px;
+    }
+
+    .ticket-card {
+        display: flex;
+        flex-direction: column;
+
+        .ticket-info {
+            width: 100%;
+
+            padding: 0;
+            margin: 0 0 10px 0;
+        }
+
+        .qr-code {
+            width: 300px;
+            aspect-ratio: 1/1;
+        }
+    }
+}

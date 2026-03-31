@@ -1,4 +1,4 @@
-import { formatPrice } from "./modules/formatPrice.js";
+import { formatPrice } from "./modules/format.js";
 
 const id = event_id;
 

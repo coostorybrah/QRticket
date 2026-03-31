@@ -126,7 +126,7 @@ class TicketType(models.Model):
 
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
-    quantity_total = models.IntegerField()
+    quantity_total = models.IntegerField(default=0)
     quantity_sold = models.IntegerField(default=0)
 
     def __str__(self):

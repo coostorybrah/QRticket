@@ -1,0 +1,119 @@
+// USE
+@use 'components/_variables' as v;
+@use 'components/_base' as *;
+
+// COLOR VARIABLES
+
+// SIZE VARIABLES
+$video_size: 320px;
+
+.scanner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    h2 {
+        margin: 15px;
+    }
+}
+
+#video {
+    width: $video_size;
+    aspect-ratio: 1/1;
+    
+    position: relative;
+
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+#video video {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+/* overlay container */
+.scan-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+/* frame */
+.scan-frame {
+    position: absolute;
+    inset: 0;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+/* corner accents */
+.scan-frame::before,
+.scan-frame::after {
+    content: "";
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 4px solid #3db077;
+}
+
+.scan-frame::before {
+    top: 0;
+    left: 0;
+    border-right: none;
+    border-bottom: none;
+}
+
+.scan-frame::after {
+    bottom: 0;
+    right: 0;
+    border-left: none;
+    border-top: none;
+}
+
+/* scanning line */
+.scan-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #3db077;
+    animation: scan 2s linear infinite;
+}
+
+@keyframes scan {
+    0% { top: 0; }
+    100% { top: 100%; }
+}
+
+/* result */
+#result {
+    margin-top: 16px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#result.success {
+    color: #3db077;
+}
+
+#result.error {
+    color: #e74c3c;
+}
+
+/* optional: dark overlay */
+#video::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+
+    /* square hole */
+    mask: 
+        linear-gradient(black, black) top/100% calc(50% - 125px) no-repeat,
+        linear-gradient(black, black) bottom/100% calc(50% - 125px) no-repeat,
+        linear-gradient(black, black) left/calc(50% - 125px) 100% no-repeat,
+        linear-gradient(black, black) right/calc(50% - 125px) 100% no-repeat;
+}

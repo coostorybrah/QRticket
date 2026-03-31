@@ -1,18 +1,16 @@
-// CSRF
-function getCSRFToken() {
-    const name = "csrftoken";
-    const cookies = document.cookie.split(";");
+import { apiFetch } from "./modules/generalApi.js";
+import { requireAuth } from "./modules/authGuard.js";
 
-    for (let cookie of cookies) {
-        cookie = cookie.trim();
-        if (cookie.startsWith(name + "=")) {
-            return cookie.substring(name.length + 1);
-        }
+document.addEventListener("DOMContentLoaded", async () => {
+    const allowed = await requireAuth();
+    
+    if (!allowed) {
+        document.querySelector(".checkout").style.display = "none";
+        throw new Error("Not authenticated");
     }
-    return null;
-}
+});
 
-// AVATAR
+// AVATAR UPLOAD
 export function initAvatarUpload() {
     const avatarImg = document.getElementById("avatar");
     const fileInput = document.getElementById("avatarInput");
@@ -53,21 +51,28 @@ export function initAvatarUpload() {
         wrapper.classList.add("uploading");
 
         try {
-            const res = await fetch("/api/upload-avatar/", {
+            const token = localStorage.getItem("access");
+
+            const res = await fetch("/api/user/upload-avatar/", {
                 method: "POST",
                 body: formData,
-                headers: { "X-CSRFToken": getCSRFToken() }
+                headers: {
+                    ...(token && { Authorization: `Bearer ${token}` })
+                }
             });
+
+            if (!res.ok) throw new Error("Upload failed");
 
             const data = await res.json();
 
             if (data.success) {
                 location.reload();
             } else {
-                alert(data.error);
+                alert(data.error || "Upload thất bại");
             }
 
         } catch (err) {
+            console.error(err);
             alert("Lỗi kết nối server");
         }
 
@@ -77,7 +82,8 @@ export function initAvatarUpload() {
     });
 }
 
-// USERNAME
+
+// USERNAME UPDATE
 export function initUsernameUpdate() {
     const form = document.getElementById("userInfoForm");
     if (!form) return;
@@ -96,35 +102,47 @@ export function initUsernameUpdate() {
         btn.disabled = true;
 
         try {
-            const res = await fetch("/api/update-username/", {
+            const data = await apiFetch("/api/user/update-username/", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRFToken": getCSRFToken()
-                },
                 body: JSON.stringify({ username })
             });
 
-            const data = await res.json();
-
             if (data.success) {
                 alert("Cập nhật thành công");
-
-            }
-            else {
+            } else {
                 alert(data.error);
             }
 
-        }
-        catch (err) {
-            alert("Lỗi kết nối server");
+        } catch (err) {
+            console.error(err);
+            alert("Lỗi server");
         }
 
         btn.disabled = false;
     });
 }
 
-// PASSWORD
+// SHOW USER INFO
+export async function initUserInfo() {
+    try {
+        const data = await apiFetch("/api/auth/me/");
+
+        if (!data.loggedIn) return;
+
+        document.getElementById("usernameInput").value = data.username || "";
+        document.getElementById("emailInput").value = data.email || "";
+
+        const avatar = document.getElementById("avatar");
+        if (avatar && data.avatar) {
+            avatar.src = data.avatar || "/static/images/avatars/default-avatar.png";
+        }
+
+    } catch (err) {
+        console.error("Failed to load user info", err);
+    }
+}
+
+// PASSWORD CHANGE
 export function initPasswordChange() {
     const form = document.getElementById("passwordForm");
     if (!form) return;
@@ -149,12 +167,8 @@ export function initPasswordChange() {
         btn.disabled = true;
 
         try {
-            const res = await fetch("/api/change-password/", {
+            const data = await apiFetch("/api/user/change-password/", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRFToken": getCSRFToken()
-                },
                 body: JSON.stringify({
                     current_password: current,
                     new_password: newPass,
@@ -162,19 +176,16 @@ export function initPasswordChange() {
                 })
             });
 
-            const data = await res.json();
-
             if (data.success) {
                 alert("Đổi mật khẩu thành công");
                 form.reset();
-            }
-            else {
+            } else {
                 alert(data.error);
             }
 
-        }
-        catch (err) {
-            alert("Lỗi kết nối server");
+        } catch (err) {
+            console.error(err);
+            alert("Lỗi server");
         }
 
         btn.disabled = false;

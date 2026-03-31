@@ -1,0 +1,362 @@
+// USE
+@use 'components/_variables' as v;
+@use 'components/_base' as *;
+@use 'components/scrollbar' as scr;
+
+// COLOR VARIABLES
+$payment_bg_color: rgb(15, 15, 15);
+$order_bg_color: rgb(30, 30, 30);
+
+$ticket_list_scrollbar_thumb_inactive_color: scr.$scrollbar_thumb_inactive_color;
+$ticket_list_scrollbar_thumb_active_color: scr.$scrollbar_thumb_active_color;
+
+// SIZE VARIABLES
+$ticket_list_container_wrapper_min_width: 340px;
+$ticket_list_scrollbar_size: 3.5px;
+
+$ticket_controls_height: 25px;
+
+// LAYOUT
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+}
+
+.checkout {
+    flex-grow: 1;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    justify-content: center;
+    align-items: center;
+}
+
+.payment {
+    background: $payment_bg_color;
+
+    height: 100%;
+    width: 100%;
+
+    padding: 15px 15px 15px 40px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    
+    h2 {
+        align-self: center;
+    }
+}
+
+#paymentForm {
+    align-self: flex-start;
+
+    .buyer-payment {
+        padding: 5px;
+    }
+
+    .buyer-info-wrapper {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+    }
+
+    .buyer-info {
+        margin: 5px 5px;
+
+        input {
+            height: 1.5rem;
+            margin: 3px 0;
+        }
+    }
+
+    button {
+        height: 1.5rem;
+
+        font-weight: bold;
+            
+        cursor: pointer;
+
+    }
+    .payment-methods {
+        margin: 3px 0 5px 0;
+
+        .method {
+            &:hover {
+                background: rgb(68, 68, 68);
+                color: white;
+            }
+        }
+
+        #cardOptionBtn  {
+            width: 85px;
+
+            text-align: center;
+        }
+
+        #paypalOptionBtn  {
+            width: 50px;
+    
+            text-align: center;
+        }
+    }
+
+    .card-info {
+        height: 1.5rem;
+    }
+
+    
+    #cardExpDate {
+        width: 65px;
+        text-align: center;
+    }
+
+    #cardVerValue {
+        width: 40px;
+        text-align: center;
+    }
+
+    #payBtn {
+        margin: 5px 0;
+        height: 1.5rem;
+        font-weight: bold;
+
+        cursor: pointer;
+
+        &:disabled {
+            cursor: default;
+        }
+    }
+
+    #paypalBtn {
+        margin: 5px 0;
+        height: 1.5rem;
+        font-weight: bold;
+
+        cursor: pointer;
+
+        &:disabled {
+            cursor: default;
+        }
+    }
+}
+
+
+
+.order {
+    background: $order_bg_color;
+
+    height: 100%;
+    padding: 15px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    hr {
+        width: 100%;
+
+        margin: 10px 0;
+        
+    }
+
+    h3 {
+        width: 100%;
+        text-align: start;
+    }
+}
+
+.event-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        width: 300px;
+        aspect-ratio: 16/9;
+    
+        margin: 10px 0;
+    
+        border-radius: 15px;
+        border: 2px solid rgb(80, 80, 80);
+    }
+
+}
+h2 {
+    margin-bottom: 10px;
+}
+
+
+.container-wrapper {
+    width: 90%;
+    min-width: $ticket_list_container_wrapper_min_width;    
+
+    border: 3px solid rgba(10, 140, 64, 0.6);
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.ticket-list-container {
+    background: black;
+
+    width: 100%;
+    height: 250px;
+
+    padding: 10px 15px;
+
+    overflow-y: auto;
+}
+
+#ticketList {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    
+}
+
+.ticket-row {
+    background: rgb(56, 56, 56);
+
+    min-width: 310px;
+    min-height: 42px;
+
+    padding: 5px 5px;
+    margin: 3px 0;
+    
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    align-items: center;
+    gap: 10px;
+
+    border-radius: 4px;
+}
+
+.ticket-info {
+    min-width: 80px;
+}
+
+.ticket-price {
+    min-width: 110px;
+}
+
+.ticket-controls {
+    width: 80px;
+    height: $ticket_controls_height;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    .qty-input {
+        background: rgb(231, 231, 231);
+
+        width: 40px;
+        height: $ticket_controls_height;
+
+        padding: 2px;
+
+        border: 1px solid grey;
+        border-left: none;
+        border-right: none;
+        outline: none;
+
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .qty-btn {
+        color: v.$light_text_color;
+        background: v.$btn_inactive_color;
+        
+        width: 20px;
+        height: $ticket_controls_height;
+        
+        outline: none;
+        border: 1px solid grey;
+        
+        font-weight: bold;
+
+        cursor: pointer;
+
+        &:hover{
+            color: black;
+            background: v.$btn_active_color;
+
+        }
+    }
+
+    .minus {
+        border-right: none;
+        border-radius: 3px 0 0 3px;
+
+    }
+
+    .plus {
+        border-left: none;
+        border-radius: 0 3px 3px 0;
+    }
+}
+
+/* Chrome, Safari, Edge */
+.qty-input::-webkit-outer-spin-button,
+.qty-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+.qty-input {
+    appearance: none;
+    -moz-appearance: textfield;
+}
+
+@media(max-width: 815px) {
+    .checkout {
+        width: 100%;
+        margin: 0;
+
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .payment {
+        width: 100%;
+        margin: 0;
+            
+    }
+
+    .buyer-info-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+
+        gap: 0px;
+    }
+
+    .order {
+        width: 100%;
+        margin: 0;
+
+        .ticket-list-container {
+            padding: 8px 8px;
+
+            overflow-y: auto;
+        }
+
+        h3 {
+            width: 100%;
+            margin-bottom: 15px;
+            padding-left: 10px;
+        }
+    }
+}

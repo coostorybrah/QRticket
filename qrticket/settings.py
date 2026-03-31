@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,11 @@ SECRET_KEY = 'django-insecure-5dh5iyyllb@wv+imxqpk+bj557m-=heg&zk%o3#w18#u&!3rcv
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "unabolishable-subautomatically-rod.ngrok-free.dev",
+    ]
 
 
 # Application definition
@@ -39,9 +44,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'rest_framework',
     'events',
     'users',
     'main',
+    'orders',
+    "payments", 
+    
 ]
 
 
@@ -129,3 +138,36 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
+
+# REST FRAMEWORK & JWT
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+}
+
+# EMAIL BACKEND
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = "qrticket.noreply@gmail.com"
+EMAIL_HOST_PASSWORD = "EMAIL HOST KEY"
+
+DEFAULT_FROM_EMAIL = "QRticket <qrticket.noreply@gmail.com>"
+
+# PAYPAL CONFIG
+PAYPAL_CLIENT_ID = "YOUR ID"
+PAYPAL_CLIENT_SECRET = "YOUR KEY"
+
+# sandbox vs live
+PAYPAL_BASE_URL = "https://api-m.sandbox.paypal.com"
+
+# ngrok URL
+BASE_URL = "unabolishable-subautomatically-rod.ngrok-free.dev"

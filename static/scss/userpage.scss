@@ -6,6 +6,7 @@
 
 // SIZE VARIABLES
 $avatar_size: 309.6px;
+$avatar_hover_opacity: 0.3; // [0;1]
 
 main {
     display: flex;
@@ -81,7 +82,7 @@ article {
         align-items: center;
         justify-content: center;
 
-        background: rgba(0, 0, 0, 0.15);
+        background: rgba(0, 0, 0, $avatar_hover_opacity);
         color: white;
         font-weight: 500;
 
