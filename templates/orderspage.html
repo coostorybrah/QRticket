@@ -15,22 +15,22 @@
 <div class="checkout">
     <!-- LEFT: PAYMENT -->
     <div class="payment">
-        <form id="paymentForm">
-            <h2>Billing Information</h2>
+        <h2>Billing Information</h2>
 
-            <div class="buyer-info">
-                <div class="buyer-info-wrapper">
-                    <label for="buyerName">Full name</label>
+        <form id="paymentForm">
+            <div class="buyer-info-wrapper">
+                <div class="buyer-info">
+                    <p class="input-label">Full name</p>
                     <input type"text" id="buyerName" placeholder="Họ và tên">
                 </div>
 
-                <div class="buyer-info-wrapper">
-                    <label for="buyerEmail">Email</label>
+                <div class="buyer-info">
+                    <p class="input-label">Email</p>
                     <input type"text" id="buyerEmail" placeholder="Email" value="{{ user.email }}">
                 </div>
 
-                <div class="buyer-info-wrapper">
-                    <label for="buyerPhone">Phone</label>
+                <div class="buyer-info">
+                    <p class="input-label">Phone</p>
                     <input type="tel" id="buyerPhone" placeholder="Phone">
                 </div>
 
@@ -38,56 +38,56 @@
             <h3>Payment method</h3>
         
             <!-- METHOD SELECT -->
-            <div class="payment-methods">
-                <button type="button" id="cardOptionBtn" class="method active">
-                    Debit/Credit
-                </button>
-        
-                <button type="button" id="payPalOptionBtn" class="method">
-                    PayPal
-                </button>
-            </div>
-        
-            <!-- DYNAMIC CONTENT -->
-            <div id="paymentDynamic">
-        
-                <!-- CARD SECTION -->
-                <div id="cardSection">
-        
-                    <label>Card number</label>
-                    <div class="card-info-container">
-                        <input type="text" placeholder="Card number">
-                        <input type="text" placeholder="MM / YY">
-                        <input type="text" placeholder="CVV">
-                    </div>
+            <div class="buyer-payment">
+                <div class="payment-methods">
+                    <button type="button" id="cardOptionBtn" class="method active">
+                        Debit/Credit
+                    </button>
+            
+                    <button type="button" id="paypalOptionBtn" class="method">
+                        PayPal
+                    </button>
+                </div>
+            
+                <!-- DYNAMIC CONTENT -->
+                <div id="paymentDynamic">
+            
+                    <!-- CARD SECTION -->
+                    <div id="cardSection">
+            
+                        <p>Card number</p>
+                        <div class="card-info-container">
+                            <input id="cardNumber" class="card-info" type="text" placeholder="Card number">
+                            <input id="cardExpDate" class="card-info" type="text" placeholder="MM / YY">
+                            <input id="cardVerValue" class="card-info" type="text" placeholder="CVV">
+                        </div>
 
-                    <div class="name-row">
                         <div>
-                            <label for="buyerCountry">Country</label>
+                            <p class="input-label">Country</p>
                             <select id="buyerCountry">
                                 <option value="VN" selected>Viet Nam</option>
                             </select>
                         </div>
         
                         <div>
-                            <label for="buyerPostal">Postal code</label>
+                            <p class="input-label">Postal code</p>
                             <input id="buyerPostal" type="text">
                         </div>
                     </div>
-                </div>
-        
-                <!-- PAYPAL SECTION -->
-                <div id="paypalSection" style="display: none;">
-                    <p>Click the button below to continue with PayPal.</p>
-        
-                    <button type="button" id="paypalBtn" class="paypal-btn">
-                        PayPal
-                    </button>
-                </div>
-                
-                <!-- SUBMIT -->
-                <button type="submit" id="payBtn">Submit</button>
-            </form>
+            
+                    <!-- PAYPAL SECTION -->
+                    <div id="paypalSection" style="display: none;">
+                        <p>Click the button below to continue with PayPal.</p>
+            
+                        <button type="button" id="paypalBtn">
+                            PayPal
+                        </button>
+                    </div>
+                    
+                    <!-- SUBMIT -->
+                    <button type="submit" id="payBtn">Submit</button>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -103,10 +103,11 @@
         </div>
 
         <!-- TICKET LIST -->
-        <div class="ticket-list-container">
-            <div id="ticketList"></div>
+         <div class="container-wrapper">
+            <div class="ticket-list-container">
+                <div id="ticketList"></div>
+            </div>
         </div>
-
         <hr>
         <h3>Tổng tiền: <span id="totalPrice">0</span></h3>
     </div>

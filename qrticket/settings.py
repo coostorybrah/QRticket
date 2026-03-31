@@ -151,11 +151,20 @@ SIMPLE_JWT = {
 }
 
 # EMAIL BACKEND
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = "qrticket.noreply@gmail.com"
+EMAIL_HOST_PASSWORD = "EMAIL HOST KEY"
+
+DEFAULT_FROM_EMAIL = "QRticket <qrticket.noreply@gmail.com>"
 
 # PAYPAL CONFIG
-PAYPAL_CLIENT_ID = "AQThCwf3Np01FZe11WvpbVRcKrFnbZGcWsl5KJUSJUOYWYFSRQD0k2QPDt8O31mh7UJAMmWc3uuu1UcA"
-PAYPAL_CLIENT_SECRET = "EMbk9iCMalPvzBVxfQDivIJ55De676R7TVbMf9N0AFLOSj6vyZMTxpi0rqcWiqfN3-VKKHr-Gn6kKBHH"
+PAYPAL_CLIENT_ID = "YOUR ID"
+PAYPAL_CLIENT_SECRET = "YOUR KEY"
 
 # sandbox vs live
 PAYPAL_BASE_URL = "https://api-m.sandbox.paypal.com"

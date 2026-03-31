@@ -10,14 +10,23 @@
 
 // BODY
 body {
-    font-family: Arial, Helvetica, sans-serif;
     color: whitesmoke;
     background-color: v.$body_bg_color;
+    
     width: 100%;
     min-width: 363.5px;
+    min-height: 100vh;
+    
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+main {
+    flex-grow: 1;
+    margin: 0;
 }
 
 // BASE WRAPPER

@@ -116,11 +116,15 @@ Xem QRticket_ERD(final).png.
 
 - - Gồm thanh toán qua paypal (sandbox) và card (KHÔNG LÀM card).
 
+- - Tài khoản thử nghiệm paypal: Tự tạo tài khoản sandbox. Điền thông tin vào qrticket/settings.py (cuối file). Khi thử nghiệm mua hàng thì dùng test accounts.
+
 ### 5. THÔNG BÁO NGƯỜI MUA
 
-- Gửi email cho người mua bao gồm tên người mua và ảnh QR cho từng vé.
+- Gửi email cho người mua bao gồm tên người mua và file pdf có ảnh QR cho từng vé.
+
+- Email backend: Vào qrticket/settings.py, xuống cuối file và điền thông tin.
 
 ### 6. QUÉT VÉ
 
-- Sau khi đăng nhập, Organizer truy cập scanner qua nút "Quét vé". (Chỉ Organizer mới có khả năng truy cập);
-- Organizer chỉ có thể quét vé cho sự kiện do bản thân tổ chức.
+- Sau khi đăng nhập, BTC truy cập scanner qua nút "Quét vé". (nằm ở header, chỉ BTC mới có);
+- BTC chỉ có thể quét vé cho sự kiện do bản thân tổ chức.

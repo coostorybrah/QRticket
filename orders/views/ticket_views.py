@@ -21,12 +21,17 @@ def api_my_tickets(request):
         for ticket in order.tickets.all():
             data.append({
                 "ticket_id": ticket.id,
-                "event": ticket.ticket_type.event.name,
+                "event_name": ticket.ticket_type.event.name,
                 "ticket_type": ticket.ticket_type.name,
                 "qr_code": ticket.qr_code.url,
                 "is_used": ticket.is_used,
                 "date": ticket.ticket_type.event.date,
-                "time": ticket.ticket_type.event.start_time,
+                "start_time": ticket.ticket_type.event.start_time,
+                "end_time": ticket.ticket_type.event.end_time,
+                "venue_name": ticket.ticket_type.event.venue.name,
+                "venue_address": ticket.ticket_type.event.venue.address,
+                "venue_city": ticket.ticket_type.event.venue.city,
+                
             })
-
+        
     return Response(data)

@@ -4,7 +4,6 @@
 // COLOR VARIABLES
 
 // SIZE VARIABLES
-$header_min_width: 360px;
 $header_min_height: 61.5px;
 
 // HEADER
@@ -16,7 +15,6 @@ header{
     margin-left: 0;
     margin-right: 0;
     width: 100%;
-    min-width: $header_min_width;
     min-height: $header_min_height;
     max-height: 147.5px;
 
@@ -169,6 +167,7 @@ header{
 
 }
 
+// MEDIA
 @media (max-width: 899.2px ) and (min-width: 461.6px) {
 
     header {

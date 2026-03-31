@@ -27,7 +27,7 @@ const form = document.getElementById("paymentForm");
 
 // payment UI
 const cardBtn = document.getElementById("cardOptionBtn");
-const paypalTab = document.getElementById("payPalOptionBtn");
+const paypalTab = document.getElementById("paypalOptionBtn");
 
 const cardSection = document.getElementById("cardSection");
 const paypalSection = document.getElementById("paypalSection");
@@ -59,7 +59,7 @@ function updateTotal() {
 
     document.querySelectorAll(".ticket-row").forEach(row => {
         const price = parseFloat(row.dataset.price);
-        const qty = parseInt(row.querySelector(".qty").innerText) || 0;
+        const qty = parseInt(row.querySelector(".qty-input").value) || 0;
         total += price * qty;
     });
 

@@ -1,4 +1,4 @@
-import { formatPrice } from "../modules/formatPrice.js";
+import { formatPrice } from "../modules/format.js";
 
 export function updateTotalUI(totalPriceEl, payBtn, total) {
     payBtn.disabled = total === 0;

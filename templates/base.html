@@ -50,8 +50,9 @@
 
 <body>
 
+    <!-- HEADER -->
     <header>
-
+        
         <!-- LOGO -->
         <div class="logo">
             <a href="{% url 'home' %}" title="QRticket">
@@ -82,8 +83,11 @@
         {% block main %}{% endblock %}
     </main>
 
+    <!-- FOOTER -->
     <footer>
-        {% block footer %}{% endblock %}
+        {% block footer %}
+            <p>~ life is good ~</p>
+        {% endblock %}
     </footer>
 
     <!-- LOGIN MODAL -->

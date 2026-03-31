@@ -21,8 +21,6 @@ def mark_order_paid(order: Order, payment_id=None, provider=None):
             ticket_type.quantity_sold += item.quantity
             ticket_type.save()
 
-    EventBus.publish("order_paid", {"order_id": order.id})
-
 
 def mark_order_failed(order: Order):
     if order.status in ["PAID", "CANCELLED"]:

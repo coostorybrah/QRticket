@@ -40,7 +40,8 @@ def api_event_detail(request, event_id):
             {
                 "id": t.id,
                 "loai": t.name,
-                "gia": float(t.price)
+                "gia": float(t.price),
+                "available": t.quantity_available,
             }
             for t in event.ticket_types.all()
         ]

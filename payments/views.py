@@ -3,6 +3,7 @@ from django.db import transaction
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from orders.services.event_bus import EventBus
 
 from orders.models import Order
 from payments.services.core import mark_order_paid
@@ -36,7 +37,8 @@ def verify_payment(request):
 
     except Order.DoesNotExist:
         return Response({"error": "Order not found"}, status=404)
-
+    
+    EventBus.publish("order_paid", {"order_id": order.id})
     return Response({
         "status": "paid",
         "order_id": order.id

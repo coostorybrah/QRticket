@@ -1,5 +1,6 @@
 from django.db import transaction
 from django.shortcuts import get_object_or_404
+from django.core.exceptions import ValidationError
 
 from orders.models import Order, OrderItem
 from events.models import TicketType
@@ -56,7 +57,6 @@ def add_items(order, items):
 
     return None
 
-
 # PAY ORDER
 def pay_order(order, provider="paypal"):
     if order.status == "PAID":
@@ -68,7 +68,6 @@ def pay_order(order, provider="paypal"):
         return None, "Payment creation failed"
 
     return payment_url, None
-
 
 # CANCEL ORDER
 def cancel_order(order):
@@ -82,3 +81,20 @@ def cancel_order(order):
     order.save()
 
     return None
+
+# UPDATE TICKET SOLD
+@transaction.atomic
+def increase_ticket_sold(order_id):
+    order = Order.objects.get(id=order_id)
+
+    for item in order.items.select_related("ticket_type"):
+        ticket_type = item.ticket_type
+        ticket_type.quantity_sold += item.quantity
+        ticket_type.save(update_fields=["quantity_sold"])
+        
+# VALIDATE TICKET STOCK
+def validate_ticket_stock(ticket_type, quantity):
+    if quantity > ticket_type.quantity_available:
+        raise ValidationError(
+            f"Only {ticket_type.quantity_available} tickets left for {ticket_type.name}"
+        )
