@@ -52,7 +52,7 @@ Xem QRticket_ERD(final).png.
 
 #### 2.4 VENUES
 
-- Organizer không được bán số lượng vé vượt quá capacity. (KHÔNG LÀM)
+- Organizer không được bán số lượng vé vượt quá venue capacity. (KHÔNG LÀM)
 
 #### 2.5 TICKET_TYPES
 
@@ -60,7 +60,7 @@ Xem QRticket_ERD(final).png.
 
 #### 2.6 ORDERS
 
-- Bao gồm thông tin bắt buộc: người mua (buyer_[info]) (khác người dùng), khi đặt vé người mua sẽ nhận email kèm QR cho từng vé.
+- Bao gồm thông tin bắt buộc: người mua (buyer_[info]) (người mua khác với người dùng), khi đặt vé người mua sẽ nhận email kèm QR cho từng vé.
 
 #### 2.7 ORDER_ITEMS
 
@@ -68,7 +68,7 @@ Xem QRticket_ERD(final).png.
 
 #### 2.8 TICKETS
 
-- MỘT vé bao gồm thông tin loại vé, mã QR tương ứng.
+- MỘT vé bao gồm thông tin loại vé và mã QR tương ứng.
 
 - CHÚ Ý: Vé khác order_items, không thể kết hợp do chức năng khác nhau.
 
@@ -98,7 +98,7 @@ Xem QRticket_ERD(final).png.
 
 ### 3. ĐĂNG XUẤT
 
-- Khi đăng xuất, JWT token được dọn dẹp và trang được tải lại.
+- Khi đăng xuất, JWT được dọn dẹp và trang được tải lại.
 
 ### 4. ĐẶT VÉ VÀ THANH TOÁN
 
@@ -128,3 +128,10 @@ Xem QRticket_ERD(final).png.
 
 - Sau khi đăng nhập, BTC truy cập scanner qua nút "Quét vé". (nằm ở header, chỉ BTC mới có);
 - BTC chỉ có thể quét vé cho sự kiện do bản thân tổ chức.
+
+### 7. TÌM KIẾM
+
+- Tìm kiếm sự kiện bằng từ khóa (header), sau đó truy vấn sâu hơn bằng filter.
+- CHÚ Ý:
+- - Nút reset trong filter chỉ reset duy nhất filter.
+- - Nếu muốn reset toàn bộ kết quả tìm kiếm thì bấm nút tìm kiếm thông tin rỗng ở header.
