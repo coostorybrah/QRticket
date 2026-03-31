@@ -150,7 +150,7 @@
 				{% if product.stock <= 0%}
 					<h5 class="text-danger">Hết vé</h5>
 				{% else %}
-				<a href="{% url 'add_cart' product.id  %}" class="btn btn-block btn-success">Mua vé</a>
+				<a href="{{ product.get_url }}" class="btn btn-block btn-success">Mua vé</a>
 				{% endif %}
 			</figcaption>
 		</figure>

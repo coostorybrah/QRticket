@@ -1,4 +1,5 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 from .models import Product
 from category.models import Category 
 from carts.views import _cart_id, CartItem
@@ -28,6 +29,12 @@ def product_detail(request, category_slug, product_slug):
         in_cart = CartItem.objects.filter(cart__cart_id=_cart_id(request), product=single_product).exists()
     except Exception as e:
         raise e
+
+    # Handle "Mua vé" form submission: redirect to add_cart with price as GET param
+    price = request.GET.get('price')
+    if price:
+        add_url = reverse('add_cart', args=[single_product.id])
+        return redirect(f"{add_url}?price={price}")
 
     context = {
         'single_product': single_product,

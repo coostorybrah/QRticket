@@ -52,7 +52,7 @@ body { background: #080808; color: #fff; }
                                 <a href="{{ product.get_url }}"><img src="{{ product.images.url }}" class="card-img-top" style="height: 170px; object-fit: cover;"></a>
                                 <div class="card-body p-2">
                                     <a href="{{ product.get_url }}" class="card-title d-block">{{ product.product_name|truncatechars:35 }}</a>
-                                    <p class="mb-1 text-success" style="font-weight:700;">Từ {{ product.price|vnd }}</p>
+                                    <p class="mb-1 text-success" style="font-weight:700;">Từ {{ product.get_min_ticket_price|vnd }}</p>
                                     <p class="mb-1"><small class="text-muted">{{ product.event_date }} | {{ product.event_time }}</small></p>
                                     <p class="mb-1"><small class="text-muted">{{ product.venue }}</small></p>
                                 </div>

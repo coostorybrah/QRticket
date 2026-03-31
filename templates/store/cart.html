@@ -42,7 +42,7 @@
 <tr class="small text-uppercase">
   <th scope="col">Sự kiện</th>
   <th scope="col" width="120">Số lượng</th>
-  <th scope="col" width="120">Giá</th>
+  <th scope="col" width="180">Giá</th>
   <th scope="col" class="text-right" width="200"> </th>
 </tr>
 </thead>
@@ -75,12 +75,12 @@
 	</td>
 	<td> 
 		<div class="price-wrap"> 
-			<var class="price text-white d-block" style="font-size: 1rem; font-weight: 500; line-height: 1.1;">{{ cart_item.sub_total|vnd }}</var> 
-			<small class="text-muted">{{ cart_item.unit_price|vnd }} / vé</small> 
+			<var class="price text-white d-block" style="font-size: 1rem; font-weight: 500; line-height: 1.1; white-space: nowrap;">{{ cart_item.sub_total|vnd }}</var> 
+			<small class="text-muted" style="white-space: nowrap;">{{ cart_item.unit_price|vnd }} / vé</small> 
 		</div> <!-- price-wrap .// -->
 	</td>
 	<td class="text-right"> 
-	<a href = "{% url 'remove_cart_item' cart_item.product.id %}" class="btn btn-danger" data-preserve-cart="true"> Remove</a>
+	<a href = "{% url 'remove_cart_item' cart_item.product.id %}" onclick="return confirm('Bạn có chắc chắn muốn hủy vé')" class="btn btn-danger" data-preserve-cart="true"> Hủy vé</a>
 	</td>
     {% endfor %}
 </tr>
@@ -95,12 +95,9 @@
 		<div class="card-body">
 			<dl class="dlist-align">
 			  <dt>Tổng tiền:</dt>
-			  <dd class="text-right text-dark b"><strong>{{ total|vnd }}</strong></dd>
+			  <dd class="text-right text-dark b" style="white-space: nowrap;"><strong>{{ total|vnd }}</strong></dd>
 			</dl>
 			<hr>
-			<p class="text-center mb-3">
-				<img src="./images/misc/payments.png" height="26">
-			</p>
 			<div id="paypal-button-container"></div>
 			<a href="{% url 'store' %}" class="btn btn-light btn-block">Xem các sự kiện khác</a>
 		</div> <!-- card-body.// -->
