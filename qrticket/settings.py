@@ -76,7 +76,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'main.context_processors.current_user',
             ],
         },
     },
@@ -158,16 +157,17 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = "qrticket.noreply@gmail.com"
-EMAIL_HOST_PASSWORD = "EMAIL HOST KEY"
+EMAIL_HOST_PASSWORD = "HOST PASSWORD"
 
 DEFAULT_FROM_EMAIL = "QRticket <qrticket.noreply@gmail.com>"
 
 # PAYPAL CONFIG
-PAYPAL_CLIENT_ID = "YOUR ID"
-PAYPAL_CLIENT_SECRET = "YOUR KEY"
+PAYPAL_CLIENT_ID = "YOUR PAYPAL CLIENT ID"
+PAYPAL_CLIENT_SECRET = "YOUR PAYPAL KEY"
 
 # sandbox vs live
 PAYPAL_BASE_URL = "https://api-m.sandbox.paypal.com"
 
 # ngrok URL
-BASE_URL = "YOUR NGROK URL" # RUN IN EXTERNAL TERMINAL: "ngrok http 8000" and copy the https link (remove the "https://")
+# RUN IN EXTERNAL TERMINAL: "ngrok http 8000" and copy the https link (remove the "https://")
+BASE_URL = "YOUR NGROK URL" 
