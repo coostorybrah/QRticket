@@ -24,7 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# Elastic Beanstalk health checks use internal host headers; allow all hosts in this deployment.
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -150,7 +151,4 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'buithanhthao284@gmail.com'
 EMAIL_HOST_PASSWORD = 'zaui phbd earp zwiz'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-
-
-ALLOWED_HOSTS=['django-qrticket-env.eba-qphcqrpa.us-west-2.elasticbeanstalk.com']
 
