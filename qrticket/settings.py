@@ -30,9 +30,7 @@ SECRET_KEY = 'django-insecure-5dh5iyyllb@wv+imxqpk+bj557m-=heg&zk%o3#w18#u&!3rcv
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "localhost",
-    "127.0.0.1",
-    "unabolishable-subautomatically-rod.ngrok-free.dev",
+        "*",
     ]
 
 
