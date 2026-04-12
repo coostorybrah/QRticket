@@ -1,15 +1,15 @@
-import { apiFetch } from "../modules/generalApi.js";
+import { protectedFetch } from "../modules/generalApi.js";
 
 
 // GET EVENT DATA
 export function fetchEvent(eventId) {
-    return apiFetch(`/api/events/${eventId}/`);
+    return protectedFetch(`/api/events/${eventId}/`);
 }
 
 
 // CREATE ORDER
 export function createOrder(data) {
-    return apiFetch("/api/orders/", {
+    return protectedFetch("/api/orders/", {
         method: "POST",
         body: JSON.stringify(data),
     });
@@ -18,7 +18,7 @@ export function createOrder(data) {
 
 // ADD TICKETS TO ORDER
 export function addItems(orderId, items) {
-    return apiFetch(`/api/orders/${orderId}/items/`, {
+    return protectedFetch(`/api/orders/${orderId}/items/`, {
         method: "POST",
         body: JSON.stringify({ items }),
     });
@@ -27,7 +27,7 @@ export function addItems(orderId, items) {
 
 // PAYMENT URL
 export function getPaymentUrl(orderId) {
-    return apiFetch(`/api/orders/${orderId}/pay/`, {
+    return protectedFetch(`/api/orders/${orderId}/pay/`, {
         method: "GET",
     });
 }

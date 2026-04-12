@@ -1,15 +1,16 @@
+{% load static %}
 <h2>Payment unsuccessful</h2>
 <p>Your payment was cancelled or failed.</p>
 <a href={% url "home" %}>Go back</a>
 
 <script type="module">
-    import { apiFetch } from "/static/js/modules/generalApi.js";
+    import { protectedFetch } from "{% static 'js/modules/generalApi.js' %}";
 
     const orderId = "{{ order_id|default:'' }}";
 
     if (orderId) {
         try {
-            await apiFetch(`/api/orders/${orderId}/cancel/`, {
+            await protectedFetch(`/api/orders/${orderId}/cancel/`, {
                 method: "POST"
             });
         } catch (err) {

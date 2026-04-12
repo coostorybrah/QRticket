@@ -16,7 +16,6 @@ def api_order_status(request, order_id):
 
     return Response({"status": order.status})
 
-
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def api_pay_order(request, order_id):

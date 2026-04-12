@@ -1,4 +1,4 @@
-import { apiFetch } from "./modules/generalApi.js";
+import { protectedFetch } from "./modules/generalApi.js";
 import { requireAuth } from "./modules/authGuard.js";
 import { formatDate, formatTime } from "./modules/format.js";
 
@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 async function loadTickets() {
     try {
-        const data = await apiFetch("/api/orders/my-tickets/");
+        const data = await protectedFetch("/api/orders/my-tickets/");
         const container = document.getElementById("tickets");
 
         if (!data.length) {

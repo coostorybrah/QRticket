@@ -1,10 +1,10 @@
-import { apiFetch } from "./generalApi.js";
+import { protectedFetch } from "./generalApi.js";
 
 let authLocked = false;
 
 export async function requireAuth() {
     try {
-        const data = await apiFetch("/api/auth/me/");
+        const data = await protectedFetch("/api/auth/me/");
 
         if (!data.loggedIn) {
             lockAuthUI();

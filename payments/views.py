@@ -43,17 +43,3 @@ def verify_payment(request):
         "status": "paid",
         "order_id": order.id
     })
-
-@api_view(["GET"])
-@permission_classes([IsAuthenticated])
-def find_order_by_paypal(request):
-    paypal_id = request.GET.get("paypal_id")
-
-    try:
-        order = Order.objects.get(payment_id=paypal_id, user=request.user)
-    except Order.DoesNotExist:
-        return Response({"error": "Order not found"}, status=404)
-
-    return Response({
-        "order_id": order.id
-    })

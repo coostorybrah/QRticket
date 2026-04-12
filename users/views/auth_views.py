@@ -1,4 +1,3 @@
-from django.db.models import Q
 from django.contrib.auth import authenticate, get_user_model
 
 from rest_framework.decorators import api_view, permission_classes
@@ -31,7 +30,7 @@ def api_signup(request):
     if User.objects.filter(email=email).exists():
         return Response({"error": "Email already exists"}, status=400)
 
-    user = User.objects.create_user(
+    User.objects.create_user(
         username=username,
         password=password,
         email=email,
@@ -49,23 +48,23 @@ def api_signup(request):
 def api_login(request):
     data = request.data
 
-    identifier = data.get("username")
-    identifier = identifier.strip().lower()
+    identifier = data.get("username").strip().lower()
     password = data.get("password")
 
-    user_obj = User.objects.filter(
-        Q(username=identifier) | Q(email=identifier)
-    ).first()
+    # Look for user
+    user_obj = User.objects.filter(username=identifier).first()
+    if not user_obj:
+        user_obj = User.objects.filter(email=identifier).first()
 
     if not user_obj:
-        return Response({"error": "Invalid credentials"}, status=401)
+        return Response({"error": "Sai tên đăng nhập hoặc email"}, status=401)
 
     user = authenticate(username=user_obj.username, password=password)
 
     if not user:
-        return Response({"error": "Invalid credentials"}, status=401)
+        return Response({"error": "Sai mật khẩu"}, status=401)
 
-    # ✅ Generate JWT
+    # Generate JWT
     refresh = RefreshToken.for_user(user)
 
     return Response({

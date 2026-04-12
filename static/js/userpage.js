@@ -1,4 +1,4 @@
-import { apiFetch } from "./modules/generalApi.js";
+import { protectedFetch } from "./modules/generalApi.js";
 import { requireAuth } from "./modules/authGuard.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -53,12 +53,9 @@ export function initAvatarUpload() {
         try {
             const token = localStorage.getItem("access");
 
-            const res = await fetch("/api/user/avatar/", {
+            const res = await apiFetch("/api/user/avatar/", {
                 method: "POST",
                 body: formData,
-                headers: {
-                    ...(token && { Authorization: `Bearer ${token}` })
-                }
             });
 
             if (!res.ok) throw new Error("Upload failed");
@@ -102,8 +99,8 @@ export function initUsernameUpdate() {
         btn.disabled = true;
 
         try {
-            const data = await apiFetch("/api/user/username/", {
-                method: "POST",
+            const data = await protectedFetch("/api/user/username/", {
+                method: "PATCH",
                 body: JSON.stringify({ username })
             });
 
@@ -125,7 +122,7 @@ export function initUsernameUpdate() {
 // SHOW USER INFO
 export async function initUserInfo() {
     try {
-        const data = await apiFetch("/api/auth/me/");
+        const data = await protectedFetch("/api/auth/me/");
 
         if (!data.loggedIn) return;
 
@@ -167,7 +164,7 @@ export function initPasswordChange() {
         btn.disabled = true;
 
         try {
-            const data = await apiFetch("/api/user/password/", {
+            const data = await protectedFetch("/api/user/password/", {
                 method: "POST",
                 body: JSON.stringify({
                     current_password: current,

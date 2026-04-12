@@ -71,6 +71,7 @@ def generate_order_pdf(order):
 
         # EVENT
         ticket_content.append(p.Paragraph(event.name, event_style))
+        ticket_content.append(p.Paragraph("BTC: " + event.organizer.user.username, event_style))
         ticket_content.append(p.Spacer(1, 10))
 
         ticket_content.append(

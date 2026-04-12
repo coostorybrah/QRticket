@@ -1,4 +1,4 @@
-import { apiFetch } from "./modules/generalApi.js";
+import { protectedFetch } from "./modules/generalApi.js";
 import { requireAuth } from "./modules/authGuard.js";
 
 let scanning = true;
@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!allowed) return;
 
     // 🔒 get real user from backend
-    const user = await apiFetch("/api/auth/me/");
+    const user = await protectedFetch("/api/auth/me/");
 
     if (!user.is_organizer) {
         window.location.href = "/";
@@ -44,7 +44,7 @@ function startScanner() {
             }
 
             try {
-                const data = await apiFetch("/api/orders/check-in/", {
+                const data = await protectedFetch("/api/orders/check-in/", {
                     method: "POST",
                     body: JSON.stringify({ ticket_id: ticketId })
                 });

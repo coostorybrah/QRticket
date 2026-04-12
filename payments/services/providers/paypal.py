@@ -49,7 +49,7 @@ def create_order(order):
     response = requests.post(url, json=payload, headers=headers)
     data = response.json()
 
-    # store PayPal order ID
+    # Store PayPal order ID
     paypal_id = data.get("id")
     order.payment_id = paypal_id
     order.payment_provider = "paypal"
@@ -80,7 +80,6 @@ def capture_order(paypal_id):
 
     data = response.json()
 
-    # Optional: validate status
     if data.get("status") != "COMPLETED":
         print("[PAYPAL NOT COMPLETED]", data)
         return False

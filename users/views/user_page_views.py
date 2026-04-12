@@ -39,11 +39,11 @@ def api_upload_avatar(request):
     })
 
 # CHANGE USERNAME
-@api_view(["POST"])
+@api_view(["PATCH"])
 @permission_classes([IsAuthenticated])
 def api_update_username(request):
     user = request.user
-    username = request.data.get("username", "").strip()
+    username = request.data.get("username", "").strip().lower()
 
     if not username:
         return Response({"error": "Username cannot be empty"}, status=400)
@@ -54,7 +54,10 @@ def api_update_username(request):
     user.username = username
     user.save()
 
-    return Response({"success": True})
+    return Response({
+        "success": True,
+        "username": username
+    })
 
 # CHANGE PASSWORD
 @api_view(["POST"])

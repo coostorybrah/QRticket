@@ -4,7 +4,6 @@ from rest_framework.response import Response
 
 from orders.models import Order
 
-
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def api_my_tickets(request):
@@ -31,7 +30,7 @@ def api_my_tickets(request):
                 "venue_name": ticket.ticket_type.event.venue.name,
                 "venue_address": ticket.ticket_type.event.venue.address,
                 "venue_city": ticket.ticket_type.event.venue.city,
-                
+
             })
         
     return Response(data)

@@ -1,9 +1,9 @@
 import { formatPrice } from "./modules/format.js";
+import { publicFetch } from "./modules/generalApi.js";
 
 async function loadEvents() {
     // TRÍCH DỮ LIỆU TỪ CSDL (.json)
-    const response = await fetch("/api/events/");
-    const db = await response.json();
+    const db = await publicFetch("/api/events/", {method: "GET"});
 
     // TRẢ CARD THEO THỂ LOẠI
     Object.entries(db).forEach(([id, item]) => {

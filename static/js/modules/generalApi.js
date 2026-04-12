@@ -3,27 +3,33 @@ import { getAccessToken, getRefreshToken, setTokens, clearTokens } from "./token
 // PUBLIC REQUEST (no JWT)
 export async function publicFetch(url, options = {}) {
     const headers = {
-        "Content-Type": "application/json",
         ...(options.headers || {}),
     };
+
+    if (!(options.body instanceof FormData)) {
+        headers["Content-Type"] = "application/json";
+    }
 
     const res = await fetch(url, {
         ...options,
         headers,
     });
 
-    return res.json();
+    return await res.json();
 }
 
 // PROTECTED REQUEST (JWT)
-export async function apiFetch(url, options = {}) {
+export async function protectedFetch(url, options = {}) {
     let token = getAccessToken();
 
     const makeRequest = async (tokenToUse) => {
         const headers = {
-            "Content-Type": "application/json",
             ...(options.headers || {}),
         };
+
+        if (!(options.body instanceof FormData)) {
+            headers["Content-Type"] = "application/json";
+        }
 
         if (tokenToUse) {
             headers["Authorization"] = `Bearer ${tokenToUse}`;
@@ -37,7 +43,7 @@ export async function apiFetch(url, options = {}) {
 
     let res = await makeRequest(token);
 
-    // 🔄 TOKEN EXPIRED → TRY REFRESH
+    // TOKEN EXPIRED → TRY REFRESH
     if (res.status === 401) {
         const newToken = await refreshAccessToken();
 
@@ -46,7 +52,7 @@ export async function apiFetch(url, options = {}) {
             throw new Error("Unauthorized");
         }
 
-        // 🔁 retry request
+        // Retry request
         res = await makeRequest(newToken);
     }
 
@@ -56,7 +62,7 @@ export async function apiFetch(url, options = {}) {
         throw new Error("Request failed");
     }
 
-    return res.json();
+    return await res.json();
 }
 
 // REFRESH TOKEN

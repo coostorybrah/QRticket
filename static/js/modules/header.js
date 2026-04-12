@@ -1,4 +1,4 @@
-import { apiFetch } from "./generalApi.js";
+import { protectedFetch } from "./generalApi.js";
 import { clearTokens } from "./token.js";
 
 export async function initHeader() {
@@ -6,7 +6,7 @@ export async function initHeader() {
     if (!container) return;
 
     try {
-        const data = await apiFetch("/api/auth/me/");
+        const data = await protectedFetch("/api/auth/me/");
 
         if (!data.loggedIn) {
             renderGuest(container);
