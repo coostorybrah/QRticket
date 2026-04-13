@@ -51,9 +51,7 @@ export function initAvatarUpload() {
         wrapper.classList.add("uploading");
 
         try {
-            const token = localStorage.getItem("access");
-
-            const res = await apiFetch("/api/user/avatar/", {
+            const res = await protectedFetch("/api/user/avatar/", {
                 method: "POST",
                 body: formData,
             });
